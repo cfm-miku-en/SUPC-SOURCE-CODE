@@ -1,0 +1,16 @@
+SUPC — Scrypto Utils Pad Continued
+==================================
+
+SUPC is a community continuation of the "Scrypto Utils Pad" (SUP) for Gorilla Tag,
+maintained by cfm-miku-en (miku) with the permission of the original author.
+
+Original work:
+  Scrypto Utils Pad — created by low. Continued here with the original author's permission.
+
+License: GNU General Public License v3.0. See the LICENSE file for the full text.
+
+Bundled third-party components (their respective licenses apply):
+  Newtonsoft.Json, BepInEx, HarmonyLib, Photon, PlayFab, Unity, QuickSong.
+
+Not affiliated with or endorsed by Another Axiom (Gorilla Tag). Trademarks and game
+assets belong to their respective owners.

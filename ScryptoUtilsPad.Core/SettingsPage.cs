@@ -65,7 +65,7 @@ namespace ScryptoUtilsPad.Core
 					_nametagText = ((obj3 != null) ? ((Component)obj3).GetComponent<TMP_Text>() : null);
 					SetupButton(val4, new System.Action(ToggleNametags));
 				}
-				_themeIndex = PlayerPrefs.GetInt("ScryptoUtilsPad.ThemeIndex", 0);
+				_themeIndex = Mathf.Clamp(PlayerPrefs.GetInt("ScryptoUtilsPad.ThemeIndex", 0), 0, Themes.Length - 1);
 				_modeIndex = PlayerPrefs.GetInt("ScryptoUtilsPad.ModeIndex", 0);
 				ScryptoUtilsPad.Core.SelectionSettings.Load();
 				ApplyTheme();
@@ -281,13 +281,13 @@ namespace ScryptoUtilsPad.Core
 			System.ValueTuple<string, Color, Color>[] array = new System.ValueTuple<string, Color, Color>[9];
 			array[0] = new System.ValueTuple<string, Color, Color>("Default", new Color(0f, 1f, 0.667f), new Color(0.169f, 0.169f, 0.169f));
 			array[1] = new System.ValueTuple<string, Color, Color>("Neon", new Color(1f, 0f, 1f), new Color(0.102f, 0.102f, 0.188f));
-			array[2] = new System.ValueTuple<string, Color, Color>("Fire", new Color(1f, 0.271f, 0f), new Color(0.11f, 0.039f, 0f));
-			array[3] = new System.ValueTuple<string, Color, Color>("Ice", new Color(0f, 0.749f, 1f), new Color(0.039f, 0.039f, 0.102f));
-			array[4] = new System.ValueTuple<string, Color, Color>("Gold", new Color(1f, 0.843f, 0f), new Color(0.102f, 0.078f, 0f));
-			array[5] = new System.ValueTuple<string, Color, Color>("Black", new Color(0.15f, 0.15f, 0.15f), new Color(0.05f, 0.05f, 0.05f));
-			array[6] = new System.ValueTuple<string, Color, Color>("White", new Color(0.95f, 0.95f, 0.95f), new Color(0.75f, 0.75f, 0.75f));
-			array[7] = new System.ValueTuple<string, Color, Color>("Purple", new Color(0.502f, 0f, 0.502f), new Color(0.078f, 0f, 0.11f));
-			array[8] = new System.ValueTuple<string, Color, Color>("Brown", new Color(0.647f, 0.165f, 0.165f), new Color(0.102f, 0.039f, 0.02f));
+			array[2] = new System.ValueTuple<string, Color, Color>("Ice And Fire", new Color(0.435f, 0.024f, 0.043f), new Color(0.024f, 0.043f, 0.267f));
+			array[3] = new System.ValueTuple<string, Color, Color>("Gold", new Color(1f, 0.843f, 0f), new Color(0.102f, 0.078f, 0f));
+			array[4] = new System.ValueTuple<string, Color, Color>("Black", new Color(0.15f, 0.15f, 0.15f), new Color(0.05f, 0.05f, 0.05f));
+			array[5] = new System.ValueTuple<string, Color, Color>("White", new Color(0.95f, 0.95f, 0.95f), new Color(0.75f, 0.75f, 0.75f));
+			array[6] = new System.ValueTuple<string, Color, Color>("Purple", new Color(0.502f, 0f, 0.502f), new Color(0.078f, 0f, 0.11f));
+			array[7] = new System.ValueTuple<string, Color, Color>("Brown", new Color(0.647f, 0.165f, 0.165f), new Color(0.102f, 0.039f, 0.02f));
+			array[8] = new System.ValueTuple<string, Color, Color>("Miku", new Color(0.078f, 0.212f, 0.549f), new Color(0.008f, 0.02f, 0.055f));
 			Themes = array;
 			string[] array2 = new string[2];
 			array2[0] = "Float";

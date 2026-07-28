@@ -1,9 +1,3 @@
-/*
- * SUPC - Scrypto Utils Pad Continued
- * Copyright (C) 2026 cfm-miku-en. Based on Scrypto Utils Pad (C) low, used with permission.
- * Licensed under the GNU General Public License v3.0 or later. See LICENSE.
- */
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,23 +8,19 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Networking;
-
 namespace ScryptoUtilsPad.Core
 {
 	public static class CheatSigGetter
 	{
 		private static readonly ManualLogSource Log = Logger.CreateLogSource("CheatSigGetter");
-
 		public static bool Enabled = true;
 		public static bool AutoUpload = true;
 		public static string UploadUrl = "https://supc.mikuuu.xyz/sig";
 		public static string UploadAuth = "4775ebbe8e8fdb4771d60e9e25db2b8ce8ed0285151a34d9";
-
 		private static readonly HashSet<string> _seen = new HashSet<string>(StringComparer.Ordinal);
 		private static readonly HashSet<string> _uploaded = new HashSet<string>(StringComparer.Ordinal);
 		private static readonly List<string> _pending = new List<string>();
 		private static readonly List<string> _allUnknown = new List<string>();
-
 		public static List<string> AllUnknown
 		{
 			get
@@ -41,17 +31,14 @@ namespace ScryptoUtilsPad.Core
 		private static MonoBehaviour _host;
 		private static float _lastFlush;
 		private const float FlushInterval = 15f;
-
 		private static readonly HashSet<string> _ignored = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 		{
 			"didtutorial", "gtag_platform", "release", "platform"
 		};
-
 		public static void Init(MonoBehaviour host)
 		{
 			_host = host;
 		}
-
 		public static void Observe(Hashtable properties)
 		{
 			if (!Enabled || properties == null)
@@ -80,7 +67,6 @@ namespace ScryptoUtilsPad.Core
 				Log.LogInfo("[SigGetter] New unknown signature: \"" + raw + "\"");
 			}
 		}
-
 		public static void Tick()
 		{
 			if (!Enabled || !AutoUpload || _pending.Count == 0)
@@ -94,7 +80,6 @@ namespace ScryptoUtilsPad.Core
 			_lastFlush = Time.time;
 			Flush();
 		}
-
 		public static void Flush()
 		{
 			if (_host == null || _pending.Count == 0 || string.IsNullOrEmpty(UploadUrl))
@@ -120,7 +105,6 @@ namespace ScryptoUtilsPad.Core
 			}
 			_host.StartCoroutine(Upload(batch));
 		}
-
 		private static IEnumerator Upload(List<string> batch)
 		{
 			string payload = JsonConvert.SerializeObject(new

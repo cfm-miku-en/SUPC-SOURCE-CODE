@@ -1,0 +1,14 @@
+# Build output
+bin/
+obj/
+
+# Reference libraries
+Libs/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/

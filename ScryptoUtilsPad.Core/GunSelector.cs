@@ -1,11 +1,4 @@
-/*
- * SUPC - Scrypto Utils Pad Continued
- * Copyright (C) 2026 cfm-miku-en. Based on Scrypto Utils Pad (C) low, used with permission.
- * Licensed under the GNU General Public License v3.0 or later. See LICENSE.
- */
-
 using UnityEngine;
-
 namespace ScryptoUtilsPad.Core
 {
 	public enum SelectMode
@@ -13,13 +6,11 @@ namespace ScryptoUtilsPad.Core
 		Leaderboard,
 		Gun
 	}
-
 	public static class SelectionSettings
 	{
 		public static readonly string[] Names = new string[2] { "Leaderboard", "Gun" };
 
 		private static int _index;
-
 		public static SelectMode Mode
 		{
 			get
@@ -27,7 +18,6 @@ namespace ScryptoUtilsPad.Core
 				return (SelectMode)_index;
 			}
 		}
-
 		public static int Index
 		{
 			get
@@ -40,7 +30,6 @@ namespace ScryptoUtilsPad.Core
 				PlayerPrefs.SetInt("ScryptoUtilsPad.SelectMode", _index);
 			}
 		}
-
 		public static string CurrentName
 		{
 			get
@@ -48,7 +37,6 @@ namespace ScryptoUtilsPad.Core
 				return Names[_index];
 			}
 		}
-
 		public static void Load()
 		{
 			_index = PlayerPrefs.GetInt("ScryptoUtilsPad.SelectMode", 0);
@@ -58,13 +46,11 @@ namespace ScryptoUtilsPad.Core
 			}
 		}
 	}
-
 	public class GunSelector : MonoBehaviour
 	{
 		private static readonly RaycastHit[] _rayBuffer = new RaycastHit[64];
 
 		private static readonly BepInEx.Logging.ManualLogSource Log = BepInEx.Logging.Logger.CreateLogSource("GunSelector");
-
 		private LineRenderer _laser;
 
 		private float _prevTrigger;
@@ -73,15 +59,18 @@ namespace ScryptoUtilsPad.Core
 
 		private GameObject _highlighter;
 
+		private Material _highlightMat;
+
 		private VRRig _selected;
 
 		private void Update()
 		{
-			if (ScryptoUtilsPad.Core.SelectionSettings.Mode != ScryptoUtilsPad.Core.SelectMode.Gun)
+			if (ScryptoUtilsPad.Core.SelectionSettings.Mode != ScryptoUtilsPad.Core.SelectMode.Gun || !ScryptoUtilsPad.Core.ModsPage.IsOpen)
 			{
 				SetLaserVisible(false);
 				Highlight(null);
 				_prevTrigger = 0f;
+				_loggedOnce = false;
 				return;
 			}
 			GorillaLocomotion.GTPlayer player = GorillaLocomotion.GTPlayer.Instance;
@@ -99,7 +88,6 @@ namespace ScryptoUtilsPad.Core
 			Vector3 origin = ctrl.TransformPoint(player.RightHand.handOffset);
 			Quaternion aimRot = ctrl.rotation * player.RightHand.handRotOffset;
 			Vector3 aimDir = aimRot * Vector3.forward;
-
 			Vector3 endPoint = origin + aimDir * 200f;
 			VRRig target = null;
 			float bestDist = float.MaxValue;
@@ -138,16 +126,13 @@ namespace ScryptoUtilsPad.Core
 			{
 				target = FindByAngle(origin, aimDir);
 			}
-
 			DrawLaser(origin, endPoint, (Object)(object)target != (Object)null);
 			Highlight((Object)(object)target != (Object)null ? target : _selected);
-
 			if (!_loggedOnce)
 			{
 				_loggedOnce = true;
 				Log.LogInfo("[GunSelector] Gun mode active — laser drawn, raycast running.");
 			}
-
 			ControllerInputPoller poller = ControllerInputPoller.instance;
 			if ((Object)(object)poller == (Object)null)
 			{
@@ -176,7 +161,6 @@ namespace ScryptoUtilsPad.Core
 			NetPlayer sel = target.creator;
 			Log.LogInfo("[GunSelector] Selected " + ((sel != null) ? sel.SanitizedNickName : "?"));
 		}
-
 		private void EnsureLaser()
 		{
 			if ((Object)(object)_laser != (Object)null)
@@ -205,10 +189,24 @@ namespace ScryptoUtilsPad.Core
 			}
 			if ((Object)(object)mat != (Object)null)
 			{
-				mat.color = new Color(0.35f, 0.85f, 1f, 0.85f);
+				mat.color = ThemeTint(0.7f, 0.6f);
 			}
 		}
-
+		private static Color ThemeTint(float alpha, float dim)
+		{
+			Color c = ScryptoUtilsPad.Core.SettingsPage.ThemeMat1;
+			float max = Mathf.Max(c.r, Mathf.Max(c.g, c.b));
+			if (max < 0.001f)
+			{
+				c = Color.white;
+			}
+			else if (max < 0.5f)
+			{
+				float boost = 0.5f / max;
+				c = new Color(Mathf.Clamp01(c.r * boost), Mathf.Clamp01(c.g * boost), Mathf.Clamp01(c.b * boost));
+			}
+			return new Color(c.r * dim, c.g * dim, c.b * dim, alpha);
+		}
 		private void DrawLaser(Vector3 from, Vector3 to, bool onTarget)
 		{
 			EnsureLaser();
@@ -222,10 +220,9 @@ namespace ScryptoUtilsPad.Core
 			Material mat = ((Renderer)_laser).material;
 			if ((Object)(object)mat != (Object)null)
 			{
-				mat.color = (onTarget ? new Color(0.4f, 1f, 0.5f, 0.9f) : new Color(0.35f, 0.85f, 1f, 0.85f));
+				mat.color = (onTarget ? ThemeTint(0.95f, 1f) : ThemeTint(0.7f, 0.6f));
 			}
 		}
-
 		private void Highlight(VRRig rig)
 		{
 			if ((Object)(object)rig == (Object)null)
@@ -262,19 +259,19 @@ namespace ScryptoUtilsPad.Core
 						hm.SetInt("_AlphaToMask", 0);
 						hm.renderQueue = 3000;
 					}
-					if ((Object)(object)hm != (Object)null)
-					{
-						hm.color = new Color(0.4f, 1f, 0.5f, 0.35f);
-					}
+					_highlightMat = hm;
 				}
 				_highlighter.transform.localScale = Vector3.one * 0.5f;
+			}
+			if ((Object)(object)_highlightMat != (Object)null)
+			{
+				_highlightMat.color = ThemeTint(0.35f, 1f);
 			}
 			_highlighter.transform.SetParent(((Component)rig).transform);
 			_highlighter.transform.localPosition = Vector3.zero;
 			_highlighter.transform.localRotation = Quaternion.identity;
 			_highlighter.SetActive(true);
 		}
-
 		private void SetLaserVisible(bool visible)
 		{
 			if ((Object)(object)_laser != (Object)null)
@@ -282,7 +279,6 @@ namespace ScryptoUtilsPad.Core
 				((Renderer)_laser).enabled = visible;
 			}
 		}
-
 		private void OnDestroy()
 		{
 			if ((Object)(object)_laser != (Object)null)
@@ -294,7 +290,6 @@ namespace ScryptoUtilsPad.Core
 				Object.Destroy((Object)(object)_highlighter);
 			}
 		}
-
 		private static VRRig FindByAngle(Vector3 origin, Vector3 dir)
 		{
 			VRRig best = null;

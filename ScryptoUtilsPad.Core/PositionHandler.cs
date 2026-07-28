@@ -78,12 +78,6 @@ namespace ScryptoUtilsPad.Core
 
 			private bool MoveNext()
 			{
-				//IL_006f: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0074: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00a4: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00a9: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00b3: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00c4: Unknown result type (might be due to invalid IL or missing references)
 				int num = _003C_003E1__state;
 				if (num != 0)
 				{
@@ -133,7 +127,6 @@ namespace ScryptoUtilsPad.Core
 
 			bool System.Collections.IEnumerator.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				return this.MoveNext();
 			}
 
@@ -185,8 +178,6 @@ namespace ScryptoUtilsPad.Core
 
 			private bool MoveNext()
 			{
-				//IL_0040: Unknown result type (might be due to invalid IL or missing references)
-				//IL_004a: Expected O, but got Unknown
 				int num = _003C_003E1__state;
 				if (num != 0)
 				{
@@ -206,7 +197,6 @@ namespace ScryptoUtilsPad.Core
 
 			bool System.Collections.IEnumerator.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				return this.MoveNext();
 			}
 
@@ -277,46 +267,6 @@ namespace ScryptoUtilsPad.Core
 
 			private bool MoveNext()
 			{
-				//IL_0144: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0149: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00c9: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00ce: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00e9: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00fd: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0102: Unknown result type (might be due to invalid IL or missing references)
-				//IL_033c: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0346: Unknown result type (might be due to invalid IL or missing references)
-				//IL_034c: Unknown result type (might be due to invalid IL or missing references)
-				//IL_035d: Unknown result type (might be due to invalid IL or missing references)
-				//IL_039e: Unknown result type (might be due to invalid IL or missing references)
-				//IL_017d: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0182: Unknown result type (might be due to invalid IL or missing references)
-				//IL_02b8: Unknown result type (might be due to invalid IL or missing references)
-				//IL_02c7: Unknown result type (might be due to invalid IL or missing references)
-				//IL_01a5: Unknown result type (might be due to invalid IL or missing references)
-				//IL_01b0: Unknown result type (might be due to invalid IL or missing references)
-				//IL_01c1: Unknown result type (might be due to invalid IL or missing references)
-				//IL_01c6: Unknown result type (might be due to invalid IL or missing references)
-				//IL_01cb: Unknown result type (might be due to invalid IL or missing references)
-				//IL_01dc: Unknown result type (might be due to invalid IL or missing references)
-				//IL_01e1: Unknown result type (might be due to invalid IL or missing references)
-				//IL_01f7: Unknown result type (might be due to invalid IL or missing references)
-				//IL_01fc: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0201: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0218: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0227: Unknown result type (might be due to invalid IL or missing references)
-				//IL_022c: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0238: Unknown result type (might be due to invalid IL or missing references)
-				//IL_023d: Unknown result type (might be due to invalid IL or missing references)
-				//IL_024c: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0257: Unknown result type (might be due to invalid IL or missing references)
-				//IL_025c: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0267: Unknown result type (might be due to invalid IL or missing references)
-				//IL_026c: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0271: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0302: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0313: Unknown result type (might be due to invalid IL or missing references)
-				//IL_0318: Unknown result type (might be due to invalid IL or missing references)
 				int num = _003C_003E1__state;
 				if (num != 0)
 				{
@@ -399,7 +349,6 @@ namespace ScryptoUtilsPad.Core
 
 			bool System.Collections.IEnumerator.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				return this.MoveNext();
 			}
 
@@ -566,17 +515,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void SetMode(ScryptoUtilsPad.Core.PositionHandler.MenuMode mode)
 		{
-			//IL_007d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0091: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0094: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0096: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ac: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00bd: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c2: Unknown result type (might be due to invalid IL or missing references)
 			CurrentMode = mode;
 			if (_state == ScryptoUtilsPad.Core.PositionHandler.MenuState.Closed)
 			{
@@ -607,46 +545,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void LateUpdate()
 		{
-			//IL_005f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0064: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0085: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ab: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0100: Unknown result type (might be due to invalid IL or missing references)
-			//IL_022c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_023b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0240: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0244: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0249: Unknown result type (might be due to invalid IL or missing references)
-			//IL_024c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0252: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0257: Unknown result type (might be due to invalid IL or missing references)
-			//IL_025c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0261: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0277: Unknown result type (might be due to invalid IL or missing references)
-			//IL_027c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0289: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0296: Unknown result type (might be due to invalid IL or missing references)
-			//IL_029b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_016c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0171: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0188: Unknown result type (might be due to invalid IL or missing references)
-			//IL_019c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01a1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_030f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_031b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_02c0: Unknown result type (might be due to invalid IL or missing references)
-			//IL_02c5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_02ca: Unknown result type (might be due to invalid IL or missing references)
-			//IL_02cf: Unknown result type (might be due to invalid IL or missing references)
-			//IL_02e5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_02ea: Unknown result type (might be due to invalid IL or missing references)
-			//IL_02f7: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01e9: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01f8: Unknown result type (might be due to invalid IL or missing references)
 			if (!_initialized || (Object)(object)Checker == (Object)null || _isAnimating)
 			{
 				return;
@@ -714,16 +612,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void StartGrab(Transform hand)
 		{
-			//IL_0054: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0059: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0065: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0079: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0083: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b3: Unknown result type (might be due to invalid IL or missing references)
 			if (_state != ScryptoUtilsPad.Core.PositionHandler.MenuState.Closed && CurrentMode != ScryptoUtilsPad.Core.PositionHandler.MenuMode.Hold)
 			{
 				Rigidbody menuRb = MenuRb;
@@ -746,8 +634,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void ReleaseGrab()
 		{
-			//IL_0028: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0037: Unknown result type (might be due to invalid IL or missing references)
 			if (_state == ScryptoUtilsPad.Core.PositionHandler.MenuState.Grabbed)
 			{
 				ScryptoUtilsPad.Core.NetworkManager instance = ScryptoUtilsPad.Core.NetworkManager.Instance;

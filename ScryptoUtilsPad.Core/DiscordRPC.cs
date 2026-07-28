@@ -1,9 +1,3 @@
-/*
- * SUPC - Scrypto Utils Pad Continued
- * Copyright (C) 2026 cfm-miku-en. Based on Scrypto Utils Pad (C) low, used with permission.
- * Licensed under the GNU General Public License v3.0 or later. See LICENSE.
- */
-
 using System;
 using System.IO;
 using System.IO.Pipes;
@@ -11,15 +5,12 @@ using System.Text;
 using System.Threading;
 using BepInEx.Logging;
 using UnityEngine;
-
 namespace ScryptoUtilsPad.Core
 {
 	public class DiscordRPC : MonoBehaviour
 	{
 		private const string ClientId = "1527098470136152174";
-
 		private static readonly ManualLogSource Log = Logger.CreateLogSource("DiscordRPC");
-
 		public static DiscordRPC Instance;
 
 		private NamedPipeClientStream _pipe;
@@ -31,7 +22,6 @@ namespace ScryptoUtilsPad.Core
 		private string _pendingState = "SUPC";
 		private readonly object _lock = new object();
 		private readonly long _startTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-
 		private void Awake()
 		{
 			Instance = this;
@@ -41,7 +31,6 @@ namespace ScryptoUtilsPad.Core
 			_thread.IsBackground = true;
 			_thread.Start();
 		}
-
 		private void OnDestroy()
 		{
 			_running = false;
@@ -57,7 +46,6 @@ namespace ScryptoUtilsPad.Core
 			}
 			Disconnect();
 		}
-
 		public static void SetPresence(string details, string state = null)
 		{
 			if (Instance == null)
@@ -71,7 +59,6 @@ namespace ScryptoUtilsPad.Core
 				Instance._dirty = true;
 			}
 		}
-
 		private void RunLoop()
 		{
 			while (_running)
@@ -108,7 +95,6 @@ namespace ScryptoUtilsPad.Core
 				}
 			}
 		}
-
 		private void Connect()
 		{
 			for (int i = 0; i < 10; i++)
@@ -129,14 +115,12 @@ namespace ScryptoUtilsPad.Core
 			}
 			throw new IOException("No Discord IPC pipe available.");
 		}
-
 		private void Handshake()
 		{
 			string json = "{\"v\":1,\"client_id\":\"" + ClientId + "\"}";
 			WriteFrame(0, json);
 			ReadFrame();
 		}
-
 		private void SendActivity()
 		{
 			if (_pipe == null || !_pipe.IsConnected)
@@ -164,7 +148,6 @@ namespace ScryptoUtilsPad.Core
 			WriteFrame(1, payload);
 			ReadFrame();
 		}
-
 		private void WriteFrame(int opcode, string data)
 		{
 			byte[] body = Encoding.UTF8.GetBytes(data);
@@ -175,7 +158,6 @@ namespace ScryptoUtilsPad.Core
 			_pipe.Write(frame, 0, frame.Length);
 			_pipe.Flush();
 		}
-
 		private void ReadFrame()
 		{
 			byte[] header = new byte[8];
@@ -201,7 +183,6 @@ namespace ScryptoUtilsPad.Core
 				total += r;
 			}
 		}
-
 		private void Disconnect()
 		{
 			_connected = false;
@@ -217,7 +198,6 @@ namespace ScryptoUtilsPad.Core
 			{
 			}
 		}
-
 		private static string Escape(string s)
 		{
 			if (string.IsNullOrEmpty(s))

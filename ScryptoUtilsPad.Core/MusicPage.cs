@@ -16,9 +16,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void Init(Transform menuRoot)
 		{
-			//IL_0126: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0153: Unknown result type (might be due to invalid IL or missing references)
-			//IL_015d: Expected O, but got Unknown
 			_pageTr = menuRoot.Find("MusicPage");
 			if (!((Object)(object)_pageTr == (Object)null))
 			{
@@ -53,8 +50,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void Update()
 		{
-			//IL_010a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0114: Unknown result type (might be due to invalid IL or missing references)
 			if (!((Object)(object)_pageTr == (Object)null) && ((Component)_pageTr).gameObject.activeInHierarchy)
 			{
 				if ((Object)(object)_songTitle != (Object)null && _songTitle.text != ScryptoUtilsPad.Tools.MediaManager.Title)
@@ -119,8 +114,6 @@ namespace ScryptoUtilsPad.Core
 
 		private static Transform FindChildByName(Transform parent, string name)
 		{
-			//IL_0011: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0017: Expected O, but got Unknown
 			System.Collections.IEnumerator enumerator = parent.GetEnumerator();
 			try
 			{

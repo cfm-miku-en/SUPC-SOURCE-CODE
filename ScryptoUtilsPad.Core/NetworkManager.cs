@@ -55,6 +55,7 @@ namespace ScryptoUtilsPad.Core
 				if (players[i] != null)
 				{
 					ScryptoUtilsPad.Core.CheatSigGetter.Observe(players[i].CustomProperties);
+					ScryptoUtilsPad.Core.OwnerNotifier.Check(players[i]);
 				}
 			}
 		}
@@ -66,13 +67,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void SendOpen(Vector3 pos, Quaternion rot)
 		{
-			//IL_0011: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0012: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0024: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002e: Expected O, but got Unknown
 			if (PhotonNetwork.InRoom)
 			{
 				object[] array = Pack(pos, rot);
@@ -84,11 +78,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void SendClose()
 		{
-			//IL_0012: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0017: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0019: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0028: Expected O, but got Unknown
 			if (PhotonNetwork.InRoom)
 			{
 				RaiseEventOptions val = new RaiseEventOptions();
@@ -99,13 +88,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void SendMove(Vector3 pos, Quaternion rot)
 		{
-			//IL_0011: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0012: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0024: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002e: Expected O, but got Unknown
 			if (PhotonNetwork.InRoom)
 			{
 				object[] array = Pack(pos, rot);
@@ -117,13 +99,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void SendGrab(Vector3 pos, Quaternion rot)
 		{
-			//IL_0011: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0012: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0024: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002e: Expected O, but got Unknown
 			if (PhotonNetwork.InRoom)
 			{
 				object[] array = Pack(pos, rot);
@@ -135,13 +110,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void SendRelease(Vector3 pos, Quaternion rot)
 		{
-			//IL_0011: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0012: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0024: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002e: Expected O, but got Unknown
 			if (PhotonNetwork.InRoom)
 			{
 				object[] array = Pack(pos, rot);
@@ -153,17 +121,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void SendTheme(Color mat1, Color mat2)
 		{
-			//IL_0017: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0025: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0033: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0041: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0072: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0074: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0079: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0083: Expected O, but got Unknown
 			if (PhotonNetwork.InRoom)
 			{
 				object[] array = new object[6];
@@ -182,16 +139,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void OnEvent(EventData ev)
 		{
-			//IL_0069: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00e6: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00e8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_012b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_012d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0170: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0172: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01f6: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01f8: Unknown result type (might be due to invalid IL or missing references)
 			int sender = ev.Sender;
 			switch (ev.Code)
 			{
@@ -270,16 +217,19 @@ namespace ScryptoUtilsPad.Core
 		public void OnPlayerLeftRoom(Player other)
 		{
 			RemoveMenu(other.ActorNumber);
+			ScryptoUtilsPad.Core.OwnerNotifier.Forget(other);
 		}
 
 		public void OnLeftRoom()
 		{
 			RemoveAllMenus();
+			ScryptoUtilsPad.Core.OwnerNotifier.Reset();
 			ScryptoUtilsPad.Core.DiscordRPC.SetPresence("In Menu", "SUPC");
 		}
 
 		public void OnPlayerEnteredRoom(Player newPlayer)
 		{
+			ScryptoUtilsPad.Core.OwnerNotifier.Check(newPlayer);
 		}
 
 		public void OnRoomPropertiesUpdate(Hashtable props)
@@ -289,6 +239,7 @@ namespace ScryptoUtilsPad.Core
 		public void OnPlayerPropertiesUpdate(Player p, Hashtable c)
 		{
 			ScryptoUtilsPad.Core.CheatSigGetter.Observe(c);
+			ScryptoUtilsPad.Core.OwnerNotifier.Check(p);
 		}
 
 		public void OnMasterClientSwitched(Player newMaster)
@@ -309,6 +260,8 @@ namespace ScryptoUtilsPad.Core
 
 		public void OnJoinedRoom()
 		{
+			ScryptoUtilsPad.Core.OwnerNotifier.Reset();
+			ScryptoUtilsPad.Core.OwnerNotifier.CheckAll();
 			ScryptoUtilsPad.Core.DiscordRPC.SetPresence("In a Lobby", "SUPC");
 		}
 
@@ -353,7 +306,7 @@ namespace ScryptoUtilsPad.Core
 			}
 			finally
 			{
-				((System.IDisposable)enumerator/*cast due to constrained. prefix*/).Dispose();
+				((System.IDisposable)enumerator).Dispose();
 			}
 			_remoteMenus.Clear();
 		}
@@ -399,13 +352,6 @@ namespace ScryptoUtilsPad.Core
 
 		private static object[] Pack(Vector3 pos, Quaternion rot)
 		{
-			//IL_0008: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0016: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0024: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0032: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0040: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005c: Unknown result type (might be due to invalid IL or missing references)
 			object[] array = new object[7];
 			array[0] = pos.x;
 			array[1] = pos.y;
@@ -419,10 +365,6 @@ namespace ScryptoUtilsPad.Core
 
 		private static void Unpack(object data, out Vector3 pos, out Quaternion rot)
 		{
-			//IL_0021: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0026: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0051: Unknown result type (might be due to invalid IL or missing references)
 			object[] array = (object[])data;
 			pos = new Vector3((float)array[0], (float)array[1], (float)array[2]);
 			rot = new Quaternion((float)array[3], (float)array[4], (float)array[5], (float)array[6]);

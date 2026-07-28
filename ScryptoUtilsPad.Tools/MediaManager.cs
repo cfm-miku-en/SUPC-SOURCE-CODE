@@ -172,7 +172,6 @@ namespace ScryptoUtilsPad.Tools
 
 			void System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				this.MoveNext();
 			}
 
@@ -183,7 +182,6 @@ namespace ScryptoUtilsPad.Tools
 
 			void System.Runtime.CompilerServices.IAsyncStateMachine.SetStateMachine(System.Runtime.CompilerServices.IAsyncStateMachine stateMachine)
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in SetStateMachine
 				this.SetStateMachine(stateMachine);
 			}
 		}
@@ -231,8 +229,6 @@ namespace ScryptoUtilsPad.Tools
 
 			private bool MoveNext()
 			{
-				//IL_0032: Unknown result type (might be due to invalid IL or missing references)
-				//IL_003c: Expected O, but got Unknown
 				switch (_003C_003E1__state)
 				{
 				default:
@@ -256,7 +252,6 @@ namespace ScryptoUtilsPad.Tools
 
 			bool System.Collections.IEnumerator.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				return this.MoveNext();
 			}
 

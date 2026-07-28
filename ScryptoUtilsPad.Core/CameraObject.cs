@@ -59,10 +59,6 @@ namespace ScryptoUtilsPad.Core
 
 			private bool MoveNext()
 			{
-				//IL_002e: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00c2: Unknown result type (might be due to invalid IL or missing references)
-				//IL_00d4: Unknown result type (might be due to invalid IL or missing references)
-				//IL_011c: Unknown result type (might be due to invalid IL or missing references)
 				int num = _003C_003E1__state;
 				if (num != 0)
 				{
@@ -96,7 +92,6 @@ namespace ScryptoUtilsPad.Core
 
 			bool System.Collections.IEnumerator.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				return this.MoveNext();
 			}
 
@@ -141,12 +136,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void Awake()
 		{
-			//IL_0038: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0049: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005f: Unknown result type (might be due to invalid IL or missing references)
 			UnityLayerExtensions.SetLayer(((Component)this).gameObject, (UnityLayer)18);
 			Collider[] components = ((Component)this).GetComponents<Collider>();
 			int num = 0;
@@ -175,12 +164,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void SetTarget(Vector3 pos, Quaternion rot)
 		{
-			//IL_0002: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0003: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0009: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0023: Unknown result type (might be due to invalid IL or missing references)
 			_targetPos = pos;
 			_targetRot = rot;
 			if (_state == ScryptoUtilsPad.Core.CameraObject.NetState.Falling)
@@ -192,12 +175,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void OnGrab(Vector3 pos, Quaternion rot)
 		{
-			//IL_0011: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0012: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0019: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0024: Unknown result type (might be due to invalid IL or missing references)
 			if (_state != ScryptoUtilsPad.Core.CameraObject.NetState.Spawning)
 			{
 				_targetPos = pos;
@@ -209,12 +186,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void OnRelease(Vector3 pos, Quaternion rot)
 		{
-			//IL_0002: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0003: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0009: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0010: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0015: Unknown result type (might be due to invalid IL or missing references)
 			_targetPos = pos;
 			_targetRot = rot;
 			_fallVelocity = Vector3.zero;
@@ -224,16 +195,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void ApplyTheme(Color mat1, Color mat2)
 		{
-			//IL_00aa: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ab: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0042: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0048: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0070: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0087: Unknown result type (might be due to invalid IL or missing references)
 			Renderer[] componentsInChildren = ((Component)this).GetComponentsInChildren<Renderer>(true);
 			int num = 0;
 			while (num < componentsInChildren.Length)
@@ -360,29 +321,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void UpdateRemote()
 		{
-			//IL_008e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0094: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00bb: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0035: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0062: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0072: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fa: Unknown result type (might be due to invalid IL or missing references)
-			//IL_010a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_010f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0114: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0120: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0126: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0130: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0135: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0156: Unknown result type (might be due to invalid IL or missing references)
-			//IL_015b: Unknown result type (might be due to invalid IL or missing references)
 			switch (_state)
 			{
 			case ScryptoUtilsPad.Core.CameraObject.NetState.Grabbed:
@@ -419,12 +357,6 @@ namespace ScryptoUtilsPad.Core
 
 		private static bool ColorClose(Color a, Color b, float tol = 0.05f)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0015: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0030: Unknown result type (might be due to invalid IL or missing references)
 			return Mathf.Abs(a.r - b.r) < tol && Mathf.Abs(a.g - b.g) < tol && Mathf.Abs(a.b - b.b) < tol;
 		}
 	}

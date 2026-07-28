@@ -10,6 +10,10 @@ namespace ScryptoUtilsPad.Core
 
 		private static readonly ManualLogSource Log = Logger.CreateLogSource("NametagManager");
 
+		private static readonly Color32 OwnerTagColor = new Color32((byte)255, (byte)196, (byte)32, (byte)255);
+
+		private static readonly Color32 OwnerTagOutline = new Color32((byte)70, (byte)45, (byte)0, (byte)255);
+
 		public static bool Enabled
 		{
 			get
@@ -55,7 +59,7 @@ namespace ScryptoUtilsPad.Core
 			}
 			finally
 			{
-				((System.IDisposable)enumerator/*cast due to constrained. prefix*/).Dispose();
+				((System.IDisposable)enumerator).Dispose();
 			}
 			System.Collections.Generic.List<VRRig>.Enumerator enumerator2 = list.GetEnumerator();
 			try
@@ -72,7 +76,7 @@ namespace ScryptoUtilsPad.Core
 			}
 			finally
 			{
-				((System.IDisposable)enumerator2/*cast due to constrained. prefix*/).Dispose();
+				((System.IDisposable)enumerator2).Dispose();
 			}
 			try
 			{
@@ -109,8 +113,6 @@ namespace ScryptoUtilsPad.Core
 
 		private static TextMeshPro CreateTag()
 		{
-			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000c: Expected O, but got Unknown
 			GameObject val = new GameObject("ScryptoNametag");
 			TextMeshPro val2 = val.AddComponent<TextMeshPro>();
 			((TMP_Text)val2).fontSize = 1.2f;
@@ -132,19 +134,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void UpdateTags()
 		{
-			//IL_00d8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00dd: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ea: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ef: Unknown result type (might be due to invalid IL or missing references)
-			//IL_010e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0114: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0119: Unknown result type (might be due to invalid IL or missing references)
-			//IL_011e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_013a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_013c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0141: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0172: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0177: Unknown result type (might be due to invalid IL or missing references)
 			Camera main = Camera.main;
 			Transform val = ((main != null) ? ((Component)main).transform : null);
 			System.Collections.Generic.Dictionary<VRRig, TextMeshPro>.Enumerator enumerator = _tags.GetEnumerator();
@@ -163,7 +152,9 @@ namespace ScryptoUtilsPad.Core
 					}
 					try
 					{
-						bool flag = Enabled && ((Component)val2).gameObject.activeInHierarchy;
+						NetPlayer creator = val2.creator;
+						bool isOwner = ScryptoUtilsPad.Core.OwnerNotifier.IsOwner((creator != null) ? creator.UserId : null);
+						bool flag = (Enabled || isOwner) && ((Component)val2).gameObject.activeInHierarchy;
 						((Component)val3).gameObject.SetActive(flag);
 						if (!flag)
 						{
@@ -181,11 +172,19 @@ namespace ScryptoUtilsPad.Core
 								val3.transform.rotation = Quaternion.LookRotation(val5, Vector3.up);
 							}
 						}
-						NetPlayer creator = val2.creator;
 						((TMP_Text)val3).text = ((creator != null) ? creator.SanitizedNickName : null) ?? string.Empty;
 						try
 						{
-							((TMP_Text)val3).outlineColor = (Color32)val2.playerColor;
+							if (isOwner)
+							{
+								((TMP_Text)val3).color = OwnerTagColor;
+								((TMP_Text)val3).outlineColor = OwnerTagOutline;
+							}
+							else
+							{
+								((TMP_Text)val3).color = Color.white;
+								((TMP_Text)val3).outlineColor = (Color32)val2.playerColor;
+							}
 						}
 						catch
 						{
@@ -199,7 +198,7 @@ namespace ScryptoUtilsPad.Core
 			}
 			finally
 			{
-				((System.IDisposable)enumerator/*cast due to constrained. prefix*/).Dispose();
+				((System.IDisposable)enumerator).Dispose();
 			}
 		}
 	}

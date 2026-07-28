@@ -136,7 +136,6 @@ namespace ScryptoUtilsPad.Tools
 
 			bool System.Collections.IEnumerator.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				return this.MoveNext();
 			}
 
@@ -216,7 +215,6 @@ namespace ScryptoUtilsPad.Tools
 
 			void System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				this.MoveNext();
 			}
 
@@ -227,7 +225,6 @@ namespace ScryptoUtilsPad.Tools
 
 			void System.Runtime.CompilerServices.IAsyncStateMachine.SetStateMachine(System.Runtime.CompilerServices.IAsyncStateMachine stateMachine)
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in SetStateMachine
 				this.SetStateMachine(stateMachine);
 			}
 		}
@@ -320,7 +317,6 @@ namespace ScryptoUtilsPad.Tools
 
 			bool System.Collections.IEnumerator.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				return this.MoveNext();
 			}
 
@@ -408,8 +404,6 @@ namespace ScryptoUtilsPad.Tools
 
 		private void Open_Disabled()
 		{
-			//IL_0079: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0089: Unknown result type (might be due to invalid IL or missing references)
 			_menu.SetActive(false);
 			if ((Object)(object)_spawnedCamera == (Object)null)
 			{
@@ -449,16 +443,6 @@ namespace ScryptoUtilsPad.Tools
 
 		public void StartGrab(Transform hand)
 		{
-			//IL_002a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0034: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0040: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0050: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0055: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008c: Unknown result type (might be due to invalid IL or missing references)
 			if (!((Object)(object)_spawnedCamera == (Object)null))
 			{
 				_holdingHand = hand;
@@ -475,8 +459,6 @@ namespace ScryptoUtilsPad.Tools
 
 		public void ReleaseGrab()
 		{
-			//IL_0027: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0037: Unknown result type (might be due to invalid IL or missing references)
 			if ((Object)(object)_spawnedCamera != (Object)null)
 			{
 				ScryptoUtilsPad.Core.NetworkManager instance = ScryptoUtilsPad.Core.NetworkManager.Instance;
@@ -491,16 +473,6 @@ namespace ScryptoUtilsPad.Tools
 
 		public void ApplyTheme(Color mat1, Color mat2)
 		{
-			//IL_0100: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0101: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0107: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0108: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0096: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00be: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00db: Unknown result type (might be due to invalid IL or missing references)
 			if ((Object)(object)_spawnedCamera == (Object)null)
 			{
 				return;
@@ -541,13 +513,6 @@ namespace ScryptoUtilsPad.Tools
 
 		private void LateUpdate()
 		{
-			//IL_0041: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0046: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0062: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0068: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c4: Unknown result type (might be due to invalid IL or missing references)
 			if (!_isGrabbed || (Object)(object)_holdingHand == (Object)null || (Object)(object)_spawnedCamera == (Object)null)
 			{
 				return;
@@ -567,18 +532,6 @@ namespace ScryptoUtilsPad.Tools
 
 		private void PositionNearPlayer()
 		{
-			//IL_006f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0075: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0081: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0086: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0097: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00bd: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00dd: Unknown result type (might be due to invalid IL or missing references)
 			GorillaTagger instance = GorillaTagger.Instance;
 			object obj;
 			if (instance == null)
@@ -650,13 +603,6 @@ namespace ScryptoUtilsPad.Tools
 
 		private void SetupCameraComponents()
 		{
-			//IL_009c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0102: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0109: Expected O, but got Unknown
-			//IL_022d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0232: Unknown result type (might be due to invalid IL or missing references)
-			//IL_02aa: Unknown result type (might be due to invalid IL or missing references)
-			//IL_02b1: Expected O, but got Unknown
 			Transform transform = _spawnedCamera.transform;
 			Transform val = transform.Find("ActualCamera");
 			if ((Object)(object)val == (Object)null)
@@ -817,9 +763,6 @@ namespace ScryptoUtilsPad.Tools
 
 		private void CaptureFrame()
 		{
-			//IL_0048: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004e: Expected O, but got Unknown
-			//IL_0074: Unknown result type (might be due to invalid IL or missing references)
 			if (!((Object)(object)_actualCamera == (Object)null) && !((Object)(object)_actualCamera.targetTexture == (Object)null))
 			{
 				RenderTexture targetTexture = _actualCamera.targetTexture;
@@ -939,12 +882,6 @@ namespace ScryptoUtilsPad.Tools
 
 		private static bool ColorClose(Color a, Color b, float tol = 0.05f)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0015: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0030: Unknown result type (might be due to invalid IL or missing references)
 			return Mathf.Abs(a.r - b.r) < tol && Mathf.Abs(a.g - b.g) < tol && Mathf.Abs(a.b - b.b) < tol;
 		}
 	}

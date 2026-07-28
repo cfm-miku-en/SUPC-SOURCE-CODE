@@ -10,6 +10,42 @@ namespace ScryptoUtilsPad.Core
 
 		private static readonly string[] ModeNames;
 
+		private static Color _themeMat1 = DefaultMat1;
+
+		private static Color _themeMat2 = DefaultMat2;
+
+		private static bool _themeLoaded;
+
+		public static Color ThemeMat1
+		{
+			get
+			{
+				EnsureThemeLoaded();
+				return _themeMat1;
+			}
+		}
+
+		public static Color ThemeMat2
+		{
+			get
+			{
+				EnsureThemeLoaded();
+				return _themeMat2;
+			}
+		}
+
+		private static void EnsureThemeLoaded()
+		{
+			if (_themeLoaded)
+			{
+				return;
+			}
+			_themeLoaded = true;
+			int idx = Mathf.Clamp(PlayerPrefs.GetInt("ScryptoUtilsPad.ThemeIndex", 0), 0, Themes.Length - 1);
+			_themeMat1 = Themes[idx].Item2;
+			_themeMat2 = Themes[idx].Item3;
+		}
+
 		private int _themeIndex;
 
 		private int _modeIndex;
@@ -128,24 +164,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void ApplyTheme()
 		{
-			//IL_0023: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0028: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0029: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00e2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00e3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00e9: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ea: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fa: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fb: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0079: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_010d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_010e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a7: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0096: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00be: Unknown result type (might be due to invalid IL or missing references)
 			PlayerPrefs.SetInt("ScryptoUtilsPad.ThemeIndex", _themeIndex);
 			System.ValueTuple<string, Color, Color> valueTuple = Themes[_themeIndex];
 			Color item = valueTuple.Item2;
@@ -177,6 +195,9 @@ namespace ScryptoUtilsPad.Core
 			}
 			_currentMat1 = item;
 			_currentMat2 = item2;
+			_themeMat1 = item;
+			_themeMat2 = item2;
+			_themeLoaded = true;
 			ScryptoUtilsPad.Tools.CameraPage instance = ScryptoUtilsPad.Tools.CameraPage.Instance;
 			if (instance != null)
 			{
@@ -245,39 +266,11 @@ namespace ScryptoUtilsPad.Core
 
 		private static bool ColorClose(Color a, Color b, float tol = 0.05f)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0015: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0030: Unknown result type (might be due to invalid IL or missing references)
 			return Mathf.Abs(a.r - b.r) < tol && Mathf.Abs(a.g - b.g) < tol && Mathf.Abs(a.b - b.b) < tol;
 		}
 
 		static SettingsPage()
 		{
-			//IL_000f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0014: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0028: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0063: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0088: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fa: Unknown result type (might be due to invalid IL or missing references)
-			//IL_010e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0133: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0147: Unknown result type (might be due to invalid IL or missing references)
-			//IL_016c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0180: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01a5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01b9: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01de: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01f2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0217: Unknown result type (might be due to invalid IL or missing references)
-			//IL_022b: Unknown result type (might be due to invalid IL or missing references)
 			System.ValueTuple<string, Color, Color>[] array = new System.ValueTuple<string, Color, Color>[9];
 			array[0] = new System.ValueTuple<string, Color, Color>("Default", new Color(0f, 1f, 0.667f), new Color(0.169f, 0.169f, 0.169f));
 			array[1] = new System.ValueTuple<string, Color, Color>("Neon", new Color(1f, 0f, 1f), new Color(0.102f, 0.102f, 0.188f));

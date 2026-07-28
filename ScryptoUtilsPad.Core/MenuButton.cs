@@ -20,18 +20,12 @@ namespace ScryptoUtilsPad.Core
 
 		private void Awake()
 		{
-			//IL_0016: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001b: Unknown result type (might be due to invalid IL or missing references)
 			UnityLayerExtensions.SetLayer(((Component)this).gameObject, (UnityLayer)18);
 			_restPos = ((Component)this).transform.localPosition;
 		}
 
 		private void Update()
 		{
-			//IL_0029: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0044: Unknown result type (might be due to invalid IL or missing references)
 			_pressT = Mathf.Lerp(_pressT, 0f, Time.deltaTime * 20f);
 			((Component)this).transform.localPosition = _restPos + Vector3.down * (0.0003f * _pressT);
 		}

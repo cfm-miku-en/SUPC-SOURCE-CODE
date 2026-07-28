@@ -9,8 +9,6 @@ namespace ScryptoUtilsPad.Core
 
 		public static TMP_FontAsset LoadEmbeddedFont(string name)
 		{
-			//IL_004e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0058: Expected O, but got Unknown
 			System.IO.Stream manifestResourceStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(string.Concat("ScryptoUtilsPad.Resources.", name, ".ttf"));
 			byte[] array = new byte[manifestResourceStream.Length];
 			manifestResourceStream.Read(array, 0, array.Length);

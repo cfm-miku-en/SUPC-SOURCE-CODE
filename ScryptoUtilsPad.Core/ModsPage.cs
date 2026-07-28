@@ -16,6 +16,16 @@ namespace ScryptoUtilsPad.Core
 
 		private static readonly ManualLogSource Log = Logger.CreateLogSource("ModsPage");
 
+		public static bool IsOpen
+		{
+			get
+			{
+				ScryptoUtilsPad.Core.ModsPage inst = Instance;
+				Transform tr = (((Object)(object)inst != (Object)null) ? inst._pageTr : null);
+				return (Object)(object)tr != (Object)null && ((Component)tr).gameObject.activeInHierarchy;
+			}
+		}
+
 		private void Awake()
 		{
 			Instance = this;
@@ -23,7 +33,6 @@ namespace ScryptoUtilsPad.Core
 
 		public void Init(Transform menuRoot)
 		{
-			//IL_00d6: Unknown result type (might be due to invalid IL or missing references)
 			_pageTr = menuRoot.Find("ModsPage");
 			if ((Object)(object)_pageTr == (Object)null)
 			{
@@ -176,7 +185,6 @@ namespace ScryptoUtilsPad.Core
 
 		private static string AdminBadge(string userId)
 		{
-			// SUPC has no remote admin system (removed Hamburbur/Seralyth injection).
 			return null;
 		}
 
@@ -228,7 +236,7 @@ namespace ScryptoUtilsPad.Core
 			}
 			finally
 			{
-				((System.IDisposable)enumerator/*cast due to constrained. prefix*/).Dispose();
+				((System.IDisposable)enumerator).Dispose();
 			}
 			return list;
 		}
@@ -277,7 +285,7 @@ namespace ScryptoUtilsPad.Core
 			}
 			finally
 			{
-				((System.IDisposable)enumerator/*cast due to constrained. prefix*/).Dispose();
+				((System.IDisposable)enumerator).Dispose();
 			}
 			return false;
 		}
@@ -327,7 +335,7 @@ namespace ScryptoUtilsPad.Core
 			}
 			finally
 			{
-				((System.IDisposable)enumerator/*cast due to constrained. prefix*/).Dispose();
+				((System.IDisposable)enumerator).Dispose();
 			}
 			return num;
 		}
@@ -375,7 +383,7 @@ namespace ScryptoUtilsPad.Core
 			}
 			finally
 			{
-				((System.IDisposable)enumerator/*cast due to constrained. prefix*/).Dispose();
+				((System.IDisposable)enumerator).Dispose();
 			}
 			return false;
 		}

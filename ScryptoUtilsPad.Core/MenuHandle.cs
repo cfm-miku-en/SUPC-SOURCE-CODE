@@ -12,8 +12,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void Awake()
 		{
-			//IL_0046: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0061: Unknown result type (might be due to invalid IL or missing references)
 			UnityLayerExtensions.SetLayer(((Component)this).gameObject, (UnityLayer)18);
 			Collider[] components = ((Component)this).GetComponents<Collider>();
 			int num = 0;

@@ -137,7 +137,6 @@ namespace ScryptoUtilsPad.Core
 
 			void System.Runtime.CompilerServices.IAsyncStateMachine.MoveNext()
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in MoveNext
 				this.MoveNext();
 			}
 
@@ -148,7 +147,6 @@ namespace ScryptoUtilsPad.Core
 
 			void System.Runtime.CompilerServices.IAsyncStateMachine.SetStateMachine(System.Runtime.CompilerServices.IAsyncStateMachine stateMachine)
 			{
-				//ILSpy generated this explicit interface implementation from .override directive in SetStateMachine
 				this.SetStateMachine(stateMachine);
 			}
 		}

@@ -1,29 +1,19 @@
-/*
- * SUPC - Scrypto Utils Pad Continued
- * Copyright (C) 2026 cfm-miku-en. Based on Scrypto Utils Pad (C) low, used with permission.
- * Licensed under the GNU General Public License v3.0 or later. See LICENSE.
- */
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
-
 namespace ScryptoUtilsPad.Core
 {
 	public static class CheatDetector
 	{
 		public static bool NotifyCheaters = true;
-
 		public static bool NotifyModders = false;
-
 		private static readonly HashSet<string> _notified = new HashSet<string>(StringComparer.Ordinal);
 
 		public static void Reset()
 		{
 			_notified.Clear();
 		}
-
 		public static void Check(Player player)
 		{
 			if (player == null || !ScryptoUtilsPad.Core.SUPCData.IsLoaded)

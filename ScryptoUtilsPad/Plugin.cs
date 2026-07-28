@@ -1,6 +1,6 @@
 namespace ScryptoUtilsPad
 {
-	[BepInPlugin("com.lowmiku.utilspad", "SUPC", "1.0.1")]
+	[BepInPlugin("com.lowmiku.utilspad", "SUPC", "1.0.7")]
 	public class Plugin : BaseUnityPlugin
 	{
 		public enum OpenButton
@@ -58,8 +58,6 @@ namespace ScryptoUtilsPad
 
 		private void Awake()
 		{
-			//IL_00f3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fd: Unknown result type (might be due to invalid IL or missing references)
 			Instance = this;
 			ScryptoUtilsPad.Core.DeHamburbur.Apply();
 			Keybind = ((BaseUnityPlugin)this).Config.Bind<ScryptoUtilsPad.Plugin.OpenButton>("Settings", "OpenButton", ScryptoUtilsPad.Plugin.OpenButton.LeftPrimary, "Button used to open/close the menu");
@@ -125,6 +123,8 @@ namespace ScryptoUtilsPad
 					num3++;
 				}
 			}
+			ScryptoUtilsPad.Core.Branding.Apply(val4);
+			ScryptoUtilsPad.Core.Branding.Apply(val2);
 			ScryptoUtilsPad.Core.PositionHandler.Checker = val4;
 			MenuOpenSound = val.LoadAsset<AudioClip>("CYOpen");
 			MenuCloseSound = val.LoadAsset<AudioClip>("CYClose");
@@ -162,6 +162,8 @@ namespace ScryptoUtilsPad
 			musicPage.Init(val4.transform);
 			ScryptoUtilsPad.Core.SettingsPage settingsPage = ((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.SettingsPage>();
 			settingsPage.Init(val4.transform);
+			ScryptoUtilsPad.Core.NotificationManager notificationManager = ((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.NotificationManager>();
+			notificationManager.Init(val.LoadAsset<GameObject>("Notification"));
 			((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.NametagManager>();
 			((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.DiscordRPC>();
 			ScryptoUtilsPad.Core.DiscordRPC.SetPresence("In Menu", "SUPC");

@@ -1,23 +1,14 @@
-/*
- * SUPC - Scrypto Utils Pad Continued
- * Copyright (C) 2026 cfm-miku-en. Based on Scrypto Utils Pad (C) low, used with permission.
- * Licensed under the GNU General Public License v3.0 or later. See LICENSE.
- */
-
 using System.Collections;
 using System.Collections.Generic;
 using BepInEx.Logging;
 using TMPro;
 using UnityEngine;
-
 namespace ScryptoUtilsPad.Core
 {
 	public class NotificationManager : MonoBehaviour
 	{
 		public static ScryptoUtilsPad.Core.NotificationManager Instance;
-
 		private GameObject _prefab;
-
 		private GameObject _instance;
 
 		private TMP_Text _text;
@@ -38,7 +29,6 @@ namespace ScryptoUtilsPad.Core
 		{
 			Instance = this;
 		}
-
 		public void Init(GameObject notificationPrefab)
 		{
 			_prefab = notificationPrefab;
@@ -58,7 +48,6 @@ namespace ScryptoUtilsPad.Core
 			}
 			_instance.SetActive(false);
 		}
-
 		private void BuildFallback()
 		{
 			_instance = new GameObject("SUPCNotification");
@@ -78,7 +67,6 @@ namespace ScryptoUtilsPad.Core
 			_text.rectTransform.sizeDelta = new Vector2(6f, 1.2f);
 			_instance.SetActive(false);
 		}
-
 		public static void Notify(string message)
 		{
 			ScryptoUtilsPad.Core.NotificationManager inst = Instance;
@@ -88,7 +76,6 @@ namespace ScryptoUtilsPad.Core
 			}
 			inst._queue.Enqueue(message);
 		}
-
 		private void Update()
 		{
 			if (!_showing && _queue.Count > 0 && (Object)(object)_instance != (Object)null)
@@ -96,7 +83,6 @@ namespace ScryptoUtilsPad.Core
 				StartCoroutine(ShowNext());
 			}
 		}
-
 		private IEnumerator ShowNext()
 		{
 			_showing = true;
@@ -115,7 +101,6 @@ namespace ScryptoUtilsPad.Core
 			}
 			_showing = false;
 		}
-
 		private void AttachToView()
 		{
 			GorillaTagger tagger = GorillaTagger.Instance;

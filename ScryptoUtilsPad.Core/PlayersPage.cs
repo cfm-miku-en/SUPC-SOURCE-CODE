@@ -193,7 +193,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void ShowPlayerInfo(VRRig rig)
 		{
-			//IL_0115: Unknown result type (might be due to invalid IL or missing references)
 			_selectedRig = rig;
 			if ((Object)(object)_secondaryMenu != (Object)null)
 			{
@@ -232,9 +231,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void FetchJoinDate(VRRig rig)
 		{
-			//IL_0042: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0047: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006d: Expected O, but got Unknown
 			NetPlayer creator = rig.creator;
 			string text = ((creator != null) ? creator.UserId : null);
 			if (string.IsNullOrEmpty(text))
@@ -294,9 +290,6 @@ namespace ScryptoUtilsPad.Core
 
 		private static string ColorCode(Color c)
 		{
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0026: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0047: Unknown result type (might be due to invalid IL or missing references)
 			return string.Concat(string.Format("<color=red>{0}</color> ", System.Math.Round(c.r * 9f)), string.Format("<color=green>{0}</color> ", System.Math.Round(c.g * 9f)), string.Format("<color=#4985e6>{0}</color>", System.Math.Round(c.b * 9f)));
 		}
 
@@ -319,11 +312,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void PlaceSelectionDot(VRRig rig)
 		{
-			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0085: Expected O, but got Unknown
-			//IL_0086: Unknown result type (might be due to invalid IL or missing references)
 			if ((Object)(object)_selectionDot != (Object)null)
 			{
 				Object.Destroy((Object)(object)_selectionDot);
@@ -339,12 +327,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void Update()
 		{
-			//IL_007a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0090: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a6: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b2: Unknown result type (might be due to invalid IL or missing references)
 			if ((Object)(object)_selectionDot != (Object)null)
 			{
 				if ((Object)(object)_selectedRig == (Object)null || (Object)(object)_selectedRig.headMesh == (Object)null)
@@ -607,9 +589,6 @@ namespace ScryptoUtilsPad.Core
 
 		private void ReportPlayer(ButtonType type)
 		{
-			//IL_0072: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0077: Unknown result type (might be due to invalid IL or missing references)
-			//IL_01b9: Unknown result type (might be due to invalid IL or missing references)
 			if ((Object)(object)_selectedRig == (Object)null)
 			{
 				return;

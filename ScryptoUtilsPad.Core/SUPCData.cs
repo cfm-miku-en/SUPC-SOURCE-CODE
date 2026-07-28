@@ -1,25 +1,16 @@
-/*
- * SUPC - Scrypto Utils Pad Continued
- * Copyright (C) 2026 cfm-miku-en. Based on Scrypto Utils Pad (C) low, used with permission.
- * Licensed under the GNU General Public License v3.0 or later. See LICENSE.
- */
-
 using System.Collections;
 using System.Collections.Generic;
 using BepInEx.Logging;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
-
 namespace ScryptoUtilsPad.Core
 {
 	public static class SUPCData
 	{
 		private const string CheatsUrl = "https://raw.githubusercontent.com/cfm-miku-en/SUPC/refs/heads/main/Cheats.txt";
 		private const string ModsUrl = "https://raw.githubusercontent.com/cfm-miku-en/SUPC/refs/heads/main/Mods.txt";
-
 		private static readonly ManualLogSource Log = Logger.CreateLogSource("SUPCData");
-
 		public static Dictionary<string, string> KnownCheats { get; private set; } = new Dictionary<string, string>();
 
 		public static Dictionary<string, string> KnownMods { get; private set; } = new Dictionary<string, string>();
@@ -37,7 +28,6 @@ namespace ScryptoUtilsPad.Core
 			_fetchStarted = true;
 			host.StartCoroutine(FetchCoroutine());
 		}
-
 		private static IEnumerator FetchCoroutine()
 		{
 			yield return FetchInto(CheatsUrl, KnownCheats, "cheats");
@@ -45,7 +35,6 @@ namespace ScryptoUtilsPad.Core
 			IsLoaded = true;
 			Log.LogInfo("[SUPC] Lists loaded. cheats=" + KnownCheats.Count + " mods=" + KnownMods.Count);
 		}
-
 		private static IEnumerator FetchInto(string url, Dictionary<string, string> target, string label)
 		{
 			UnityWebRequest req = UnityWebRequest.Get(url);

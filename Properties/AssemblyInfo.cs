@@ -1,0 +1,7 @@
+[assembly: System.Reflection.AssemblyCompany("ScryptoUtilsPad")]
+[assembly: System.Reflection.AssemblyConfiguration("Debug")]
+[assembly: System.Reflection.AssemblyFileVersion("1.0.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersion("1.0.0")]
+[assembly: System.Reflection.AssemblyProduct("SUPC")]
+[assembly: System.Reflection.AssemblyTitle("SUPC - Scrypto Utils Pad Continued")]
+[assembly: System.Reflection.AssemblyVersion("1.0.0.0")]

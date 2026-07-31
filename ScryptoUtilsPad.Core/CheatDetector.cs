@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
+using UnityEngine;
 namespace ScryptoUtilsPad.Core
 {
 	public static class CheatDetector
 	{
 		public static bool NotifyCheaters = true;
-		public static bool NotifyModders = false;
+		public static bool NotifyModders = true;
 		private static readonly HashSet<string> _notified = new HashSet<string>(StringComparer.Ordinal);
 
 		public static void Reset()
@@ -66,12 +67,12 @@ namespace ScryptoUtilsPad.Core
 			if (cheatName != null && NotifyCheaters)
 			{
 				_notified.Add(id);
-				ScryptoUtilsPad.Core.NotificationManager.Notify("[<color=red>Cheater</color>] " + nick + " - " + cheatName);
+				ScryptoUtilsPad.Core.NotificationManager.Notify("[Illegal] " + nick + " - " + cheatName, Color.red);
 			}
 			else if (modName != null && NotifyModders)
 			{
 				_notified.Add(id);
-				ScryptoUtilsPad.Core.NotificationManager.Notify("[<color=green>Modder</color>] " + nick + " - " + modName);
+				ScryptoUtilsPad.Core.NotificationManager.Notify("[Legal] " + nick + " - " + modName, Color.green);
 			}
 		}
 	}

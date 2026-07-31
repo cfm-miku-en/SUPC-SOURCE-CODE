@@ -16,11 +16,18 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\JetBrainsMono-Bold.ttf"><LogicalName>ScryptoUtilsPad.Resources.JetBrainsMono-Bold.ttf</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Resources\pixel.ttf"><LogicalName>ScryptoUtilsPad.Resources.pixel.ttf</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\MetaLogo.png"><LogicalName>ScryptoUtilsPad.Resources.MetaLogo.png</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\OculusLogo.png"><LogicalName>ScryptoUtilsPad.Resources.OculusLogo.png</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\SteamLogo.png"><LogicalName>ScryptoUtilsPad.Resources.SteamLogo.png</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\QuickSong.exe"><LogicalName>ScryptoUtilsPad.Resources.QuickSong.exe</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\cychecker"><LogicalName>ScryptoUtilsPad.Resources.cychecker</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Resources\Clicky.wav"><LogicalName>ScryptoUtilsPad.Resources.Clicky.wav</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Resources\Woody Click.wav"><LogicalName>ScryptoUtilsPad.Resources.Woody Click.wav</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Resources\Border.wav"><LogicalName>ScryptoUtilsPad.Resources.Border.wav</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Resources\Creamy.wav"><LogicalName>ScryptoUtilsPad.Resources.Creamy.wav</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Resources\Splash.wav"><LogicalName>ScryptoUtilsPad.Resources.Splash.wav</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Resources\Half-Life.wav"><LogicalName>ScryptoUtilsPad.Resources.Half-Life.wav</LogicalName></EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

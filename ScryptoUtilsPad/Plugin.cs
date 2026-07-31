@@ -1,6 +1,6 @@
 namespace ScryptoUtilsPad
 {
-	[BepInPlugin("com.lowmiku.utilspad", "SUPC", "1.0.7")]
+	[BepInPlugin("com.lowmiku.utilspad", "SUPC", "1.1.9")]
 	public class Plugin : BaseUnityPlugin
 	{
 		public enum OpenButton
@@ -56,6 +56,26 @@ namespace ScryptoUtilsPad
 			}
 		}
 
+		private static void NeutralizeColliders(GameObject root)
+		{
+			if ((Object)(object)root == (Object)null)
+			{
+				return;
+			}
+			Collider[] colliders = root.GetComponentsInChildren<Collider>(true);
+			int i = 0;
+			while (i < colliders.Length)
+			{
+				Collider col = colliders[i];
+				if ((Object)(object)col != (Object)null)
+				{
+					col.isTrigger = true;
+					UnityLayerExtensions.SetLayer(((Component)col).gameObject, (UnityLayer)18);
+				}
+				i++;
+			}
+		}
+
 		private void Awake()
 		{
 			Instance = this;
@@ -89,6 +109,7 @@ namespace ScryptoUtilsPad
 			val4.transform.localScale = Vector3.one * 0.85f;
 			Object.DontDestroyOnLoad((Object)(object)val4);
 			val4.SetActive(false);
+			NeutralizeColliders(val4);
 			Shader val5 = Shader.Find("GorillaTag/UberShader");
 			if ((Object)(object)val5 != (Object)null)
 			{
@@ -129,6 +150,9 @@ namespace ScryptoUtilsPad
 			MenuOpenSound = val.LoadAsset<AudioClip>("CYOpen");
 			MenuCloseSound = val.LoadAsset<AudioClip>("CYClose");
 			ButtonClickSound = val.LoadAsset<AudioClip>("CYClick");
+			ScryptoUtilsPad.Core.ClickSoundSettings.Init(ButtonClickSound);
+			ScryptoUtilsPad.Core.MenuSoundSettings.Init(MenuOpenSound, MenuCloseSound);
+			ScryptoUtilsPad.Core.NametagFontSettings.Init(Font);
 			_soundBundle = val;
 			Rigidbody val9 = val4.AddComponent<Rigidbody>();
 			val9.isKinematic = true;
@@ -165,6 +189,7 @@ namespace ScryptoUtilsPad
 			ScryptoUtilsPad.Core.NotificationManager notificationManager = ((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.NotificationManager>();
 			notificationManager.Init(val.LoadAsset<GameObject>("Notification"));
 			((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.NametagManager>();
+			((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.OwnerNametagsDriver>();
 			((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.DiscordRPC>();
 			ScryptoUtilsPad.Core.DiscordRPC.SetPresence("In Menu", "SUPC");
 		}

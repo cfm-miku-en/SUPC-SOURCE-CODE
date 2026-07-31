@@ -62,6 +62,7 @@ namespace ScryptoUtilsPad.Core
 				_modsText.text = "No user selected";
 			}
 			ScryptoUtilsPad.Core.SUPCData.FetchAsync((MonoBehaviour)(object)this);
+			ScryptoUtilsPad.Core.OwnerData.FetchAsync((MonoBehaviour)(object)this);
 			CreateViewUnknownButton();
 		}
 
@@ -188,7 +189,7 @@ namespace ScryptoUtilsPad.Core
 			return null;
 		}
 
-		private static System.Collections.Generic.List<string> CheckProperties(VRRig rig)
+		public static System.Collections.Generic.List<string> CheckProperties(VRRig rig)
 		{
 			System.Collections.Generic.List<string> list = new System.Collections.Generic.List<string>();
 			NetPlayer creator = rig.creator;

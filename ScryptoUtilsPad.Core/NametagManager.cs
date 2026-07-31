@@ -10,10 +10,6 @@ namespace ScryptoUtilsPad.Core
 
 		private static readonly ManualLogSource Log = Logger.CreateLogSource("NametagManager");
 
-		private static readonly Color32 OwnerTagColor = new Color32((byte)255, (byte)196, (byte)32, (byte)255);
-
-		private static readonly Color32 OwnerTagOutline = new Color32((byte)70, (byte)45, (byte)0, (byte)255);
-
 		public static bool Enabled
 		{
 			get
@@ -117,10 +113,10 @@ namespace ScryptoUtilsPad.Core
 			TextMeshPro val2 = val.AddComponent<TextMeshPro>();
 			((TMP_Text)val2).fontSize = 1.2f;
 			((TMP_Text)val2).alignment = (TextAlignmentOptions)514;
-			ScryptoUtilsPad.Plugin instance = ScryptoUtilsPad.Plugin.Instance;
-			if ((Object)(object)((instance != null) ? instance.Font : null) != (Object)null)
+			TMP_FontAsset font = ScryptoUtilsPad.Core.NametagFontSettings.CurrentFont;
+			if ((Object)(object)font != (Object)null)
 			{
-				((TMP_Text)val2).font = ScryptoUtilsPad.Plugin.Instance.Font;
+				((TMP_Text)val2).font = font;
 			}
 			try
 			{
@@ -130,6 +126,31 @@ namespace ScryptoUtilsPad.Core
 			{
 			}
 			return val2;
+		}
+
+		public void RefreshFont()
+		{
+			TMP_FontAsset font = ScryptoUtilsPad.Core.NametagFontSettings.CurrentFont;
+			if ((Object)(object)font == (Object)null)
+			{
+				return;
+			}
+			System.Collections.Generic.Dictionary<VRRig, TextMeshPro>.ValueCollection.Enumerator enumerator = _tags.Values.GetEnumerator();
+			try
+			{
+				while (enumerator.MoveNext())
+				{
+					TextMeshPro tag = enumerator.Current;
+					if ((Object)(object)tag != (Object)null)
+					{
+						((TMP_Text)tag).font = font;
+					}
+				}
+			}
+			finally
+			{
+				((System.IDisposable)enumerator).Dispose();
+			}
 		}
 
 		private void UpdateTags()
@@ -153,41 +174,24 @@ namespace ScryptoUtilsPad.Core
 					try
 					{
 						NetPlayer creator = val2.creator;
-						bool isOwner = ScryptoUtilsPad.Core.OwnerNotifier.IsOwner((creator != null) ? creator.UserId : null);
-						bool flag = (Enabled || isOwner) && ((Component)val2).gameObject.activeInHierarchy;
+						bool flag = Enabled && ((Component)val2).gameObject.activeInHierarchy;
 						((Component)val3).gameObject.SetActive(flag);
-						if (!flag)
+						if (flag)
 						{
-							continue;
-						}
-						GameObject headMesh = val2.headMesh;
-						Transform val4 = ((headMesh != null) ? headMesh.transform : null) ?? ((Component)val2).transform;
-						float num = ((val2.scaleFactor > 0f) ? val2.scaleFactor : 1f);
-						val3.transform.position = val4.position + Vector3.up * (0.48f * num);
-						if ((Object)(object)val != (Object)null)
-						{
-							Vector3 val5 = val3.transform.position - val.position;
-							if (val5.sqrMagnitude > 0.0001f)
-							{
-								val3.transform.rotation = Quaternion.LookRotation(val5, Vector3.up);
-							}
-						}
-						((TMP_Text)val3).text = ((creator != null) ? creator.SanitizedNickName : null) ?? string.Empty;
-						try
-						{
-							if (isOwner)
-							{
-								((TMP_Text)val3).color = OwnerTagColor;
-								((TMP_Text)val3).outlineColor = OwnerTagOutline;
-							}
-							else
+							GameObject headMesh = val2.headMesh;
+							Transform val4 = ((headMesh != null) ? headMesh.transform : null) ?? ((Component)val2).transform;
+							float num = ((val2.scaleFactor > 0f) ? val2.scaleFactor : 1f);
+							val3.transform.position = val4.position + Vector3.up * (0.48f * num);
+							FaceCamera(val3, val);
+							((TMP_Text)val3).text = ((creator != null) ? creator.SanitizedNickName : null) ?? string.Empty;
+							try
 							{
 								((TMP_Text)val3).color = Color.white;
 								((TMP_Text)val3).outlineColor = (Color32)val2.playerColor;
 							}
-						}
-						catch
-						{
+							catch
+							{
+							}
 						}
 					}
 					catch (System.Exception ex)
@@ -199,6 +203,19 @@ namespace ScryptoUtilsPad.Core
 			finally
 			{
 				((System.IDisposable)enumerator).Dispose();
+			}
+		}
+
+		private static void FaceCamera(TextMeshPro text, Transform camera)
+		{
+			if ((Object)(object)camera == (Object)null)
+			{
+				return;
+			}
+			Vector3 dir = text.transform.position - camera.position;
+			if (dir.sqrMagnitude > 0.0001f)
+			{
+				text.transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
 			}
 		}
 	}

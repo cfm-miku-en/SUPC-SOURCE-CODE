@@ -13,11 +13,23 @@ namespace ScryptoUtilsPad.Core
 
 		private TMP_Text _text;
 
-		private readonly Queue<string> _queue = new Queue<string>();
+		private struct Entry
+		{
+			public string Message;
+			public Color Color;
+		}
+
+		private readonly Queue<Entry> _queue = new Queue<Entry>();
 
 		private bool _showing;
 
-		private static readonly Vector3 ViewOffset = new Vector3(-0.32f, 0.22f, 1f);
+		private Vector3 _baseScale = Vector3.one;
+
+		
+		private static readonly Vector3 ViewOffset = new Vector3(-0.22f, -0.4f, 1f);
+
+		
+		private const float SizeScale = 0.65f;
 
 		private const float DisplaySeconds = 5f;
 
@@ -40,6 +52,7 @@ namespace ScryptoUtilsPad.Core
 			}
 			_instance = Object.Instantiate<GameObject>(_prefab);
 			Object.DontDestroyOnLoad(_instance);
+			_baseScale = _instance.transform.localScale;
 			Transform tr = _instance.transform.Find("NotificationText");
 			_text = ((((Object)(object)tr != (Object)null) ? ((Component)tr).GetComponent<TMP_Text>() : null) ?? _instance.GetComponentInChildren<TMP_Text>(true));
 			if ((Object)(object)_text == (Object)null)
@@ -69,12 +82,16 @@ namespace ScryptoUtilsPad.Core
 		}
 		public static void Notify(string message)
 		{
+			Notify(message, Color.white);
+		}
+		public static void Notify(string message, Color color)
+		{
 			ScryptoUtilsPad.Core.NotificationManager inst = Instance;
 			if ((Object)(object)inst == (Object)null || string.IsNullOrEmpty(message))
 			{
 				return;
 			}
-			inst._queue.Enqueue(message);
+			inst._queue.Enqueue(new Entry { Message = message, Color = color });
 		}
 		private void Update()
 		{
@@ -88,10 +105,12 @@ namespace ScryptoUtilsPad.Core
 			_showing = true;
 			while (_queue.Count > 0)
 			{
-				string message = _queue.Dequeue();
+				Entry entry = _queue.Dequeue();
 				if ((Object)(object)_text != (Object)null)
 				{
-					_text.text = message;
+					_text.text = entry.Message;
+					((Graphic)_text).color = entry.Color;
+					_text.alignment = (TextAlignmentOptions)514;
 				}
 				AttachToView();
 				_instance.SetActive(true);
@@ -118,6 +137,7 @@ namespace ScryptoUtilsPad.Core
 			_instance.transform.SetParent(view, false);
 			_instance.transform.localPosition = ViewOffset;
 			_instance.transform.localRotation = Quaternion.identity;
+			_instance.transform.localScale = _baseScale * SizeScale;
 		}
 	}
 }

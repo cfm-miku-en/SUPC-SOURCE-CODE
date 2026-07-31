@@ -9,7 +9,7 @@ namespace ScryptoUtilsPad.Core
 {
 	public class DiscordRPC : MonoBehaviour
 	{
-		private const string ClientId = "1527098470136152174";
+		private const string ClientId = "1531992781579489311";
 		private static readonly ManualLogSource Log = Logger.CreateLogSource("DiscordRPC");
 		public static DiscordRPC Instance;
 
@@ -143,7 +143,7 @@ namespace ScryptoUtilsPad.Core
 				"\"state\":\"" + Escape(state) + "\"," +
 				"\"timestamps\":{\"start\":" + _startTime + "}," +
 				"\"assets\":{\"large_image\":\"supc\",\"large_text\":\"SUPC\"}," +
-				"\"buttons\":[{\"label\":\"Get SUPC\",\"url\":\"https://discord.gg/CUFYZmqXGH\"}]" +
+                "\"buttons\":[{\"label\":\"Get SUPC\",\"url\":\"https://discord.gg/bPjmq3qw6Q\"}]" +
 				"}},\"nonce\":\"" + Guid.NewGuid().ToString() + "\"}";
 			WriteFrame(1, payload);
 			ReadFrame();

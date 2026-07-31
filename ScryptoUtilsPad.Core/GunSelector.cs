@@ -65,7 +65,7 @@ namespace ScryptoUtilsPad.Core
 
 		private void Update()
 		{
-			if (ScryptoUtilsPad.Core.SelectionSettings.Mode != ScryptoUtilsPad.Core.SelectMode.Gun || !ScryptoUtilsPad.Core.ModsPage.IsOpen)
+			if (ScryptoUtilsPad.Core.SelectionSettings.Mode != ScryptoUtilsPad.Core.SelectMode.Gun || (!ScryptoUtilsPad.Core.PlayersPage.IsOpen && !ScryptoUtilsPad.Core.ModsPage.IsOpen))
 			{
 				SetLaserVisible(false);
 				Highlight(null);
@@ -158,6 +158,11 @@ namespace ScryptoUtilsPad.Core
 			}
 			page.SelectRig(target);
 			_selected = target;
+			ScryptoUtilsPad.Core.MenuManager menu = ScryptoUtilsPad.Core.MenuManager.Instance;
+			if ((Object)(object)menu != (Object)null)
+			{
+				menu.OpenModsPage();
+			}
 			NetPlayer sel = target.creator;
 			Log.LogInfo("[GunSelector] Selected " + ((sel != null) ? sel.SanitizedNickName : "?"));
 		}

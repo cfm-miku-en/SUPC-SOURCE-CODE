@@ -232,9 +232,42 @@ namespace ScryptoUtilsPad.Core
 
 		public static ScryptoUtilsPad.Core.MenuManager Instance;
 
+		private Transform _playersPageTr;
+
+		private Transform _secondaryMenuTr;
+
+		private Transform _roomPageTr;
+
+		private Transform _modsPageTr;
+
+		private Transform _timePageTr;
+
+		private Transform _musicPageTr;
+
+		private Transform _settingsPageTr;
+
 		private void Awake()
 		{
 			Instance = this;
+		}
+
+		public void OpenModsPage()
+		{
+			SetPageActive(_playersPageTr, false);
+			SetPageActive(_secondaryMenuTr, false);
+			SetPageActive(_roomPageTr, false);
+			SetPageActive(_modsPageTr, true);
+			SetPageActive(_timePageTr, false);
+			SetPageActive(_musicPageTr, false);
+			SetPageActive(_settingsPageTr, false);
+		}
+
+		private static void SetPageActive(Transform tr, bool active)
+		{
+			if ((Object)(object)tr != (Object)null)
+			{
+				((Component)tr).gameObject.SetActive(active);
+			}
 		}
 
 		public void Init(GameObject menu)
@@ -248,6 +281,13 @@ namespace ScryptoUtilsPad.Core
 			_003C_003Ec__DisplayClass2_1.timePageTr = transform.Find("TimePage");
 			_003C_003Ec__DisplayClass2_1.musicPageTr = transform.Find("MusicPage");
 			_003C_003Ec__DisplayClass2_1.settingsPageTr = transform.Find("SettingsPage");
+			_playersPageTr = _003C_003Ec__DisplayClass2_1.playersPageTr;
+			_secondaryMenuTr = _003C_003Ec__DisplayClass2_1.secondaryMenuTr;
+			_roomPageTr = _003C_003Ec__DisplayClass2_1.roomPageTr;
+			_modsPageTr = _003C_003Ec__DisplayClass2_1.modsPageTr;
+			_timePageTr = _003C_003Ec__DisplayClass2_1.timePageTr;
+			_musicPageTr = _003C_003Ec__DisplayClass2_1.musicPageTr;
+			_settingsPageTr = _003C_003Ec__DisplayClass2_1.settingsPageTr;
 			if ((Object)(object)_003C_003Ec__DisplayClass2_1.roomPageTr != (Object)null)
 			{
 				((Component)_003C_003Ec__DisplayClass2_1.roomPageTr).gameObject.SetActive(false);

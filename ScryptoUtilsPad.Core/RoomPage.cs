@@ -222,7 +222,7 @@ namespace ScryptoUtilsPad.Core
 			}
 		}
 
-		private static void OnDisconnect()
+		public static void OnDisconnect()
 		{
 			if (NetworkSystem.Instance.InRoom)
 			{
@@ -232,7 +232,7 @@ namespace ScryptoUtilsPad.Core
 
 		[System.Runtime.CompilerServices.AsyncStateMachine(typeof(ScryptoUtilsPad.Core.RoomPage._003COnJoinPublic_003Ed__11))]
 		[System.Diagnostics.DebuggerStepThrough]
-		private static void OnJoinPublic()
+		public static void OnJoinPublic()
 		{
 			ScryptoUtilsPad.Core.RoomPage._003COnJoinPublic_003Ed__11 stateMachine = new ScryptoUtilsPad.Core.RoomPage._003COnJoinPublic_003Ed__11();
 			stateMachine._003C_003Et__builder = System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Create();
@@ -246,7 +246,7 @@ namespace ScryptoUtilsPad.Core
 			_infoRefreshTimer = 0f;
 		}
 
-		private static string FormatGamemode(string gamemode)
+		public static string FormatGamemode(string gamemode)
 		{
 			string text = gamemode.ToLower();
 			if (text.Contains("super"))
@@ -284,7 +284,7 @@ namespace ScryptoUtilsPad.Core
 			return gamemode;
 		}
 
-		private static string FormatQueue(string gamemode)
+		public static string FormatQueue(string gamemode)
 		{
 			string text = gamemode.ToLower();
 			if (text.Contains("default"))

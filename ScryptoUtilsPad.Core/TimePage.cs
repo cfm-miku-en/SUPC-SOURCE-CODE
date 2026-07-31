@@ -49,6 +49,14 @@ namespace ScryptoUtilsPad.Core
 
 		private bool _isRaining;
 
+		public bool IsRaining
+		{
+			get
+			{
+				return _isRaining;
+			}
+		}
+
 		private void Awake()
 		{
 			Instance = this;
@@ -102,7 +110,7 @@ namespace ScryptoUtilsPad.Core
 		}
 
 
-		private static void SetTime(int hour)
+		public static void SetTime(int hour)
 		{
 			if (!((Object)(object)BetterDayNightManager.instance == (Object)null))
 			{
@@ -110,7 +118,7 @@ namespace ScryptoUtilsPad.Core
 			}
 		}
 
-		private void ToggleRain()
+		public void ToggleRain()
 		{
 			BetterDayNightManager instance = BetterDayNightManager.instance;
 			if (((instance != null) ? ((BetterDayNightManager)instance).weatherCycle : null) != null)

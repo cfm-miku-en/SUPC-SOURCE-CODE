@@ -73,6 +73,16 @@ namespace ScryptoUtilsPad.Core
 
 		private static bool _platformFieldsSearched;
 
+		public static bool IsOpen
+		{
+			get
+			{
+				ScryptoUtilsPad.Core.PlayersPage inst = Instance;
+				Transform tr = (((Object)(object)inst != (Object)null) ? inst._pageTr : null);
+				return (Object)(object)tr != (Object)null && ((Component)tr).gameObject.activeInHierarchy;
+			}
+		}
+
 		private int MaxPage
 		{
 			get
@@ -248,7 +258,7 @@ namespace ScryptoUtilsPad.Core
 			}
 		}
 
-		private string GetFps(VRRig rig)
+		public string GetFps(VRRig rig)
 		{
 			if (!_fpsFieldSearched)
 			{
@@ -288,12 +298,12 @@ namespace ScryptoUtilsPad.Core
 			return "N/A";
 		}
 
-		private static string ColorCode(Color c)
+		public static string ColorCode(Color c)
 		{
 			return string.Concat(string.Format("<color=red>{0}</color> ", System.Math.Round(c.r * 9f)), string.Format("<color=green>{0}</color> ", System.Math.Round(c.g * 9f)), string.Format("<color=#4985e6>{0}</color>", System.Math.Round(c.b * 9f)));
 		}
 
-		private static string ColoredFps(string fps)
+		public static string ColoredFps(string fps)
 		{
 			int result;
 			if (!int.TryParse(fps, out result))
@@ -503,7 +513,18 @@ namespace ScryptoUtilsPad.Core
 					{
 						NetPlayer creator = _rigs[num3].creator;
 						string text = ((creator != null) ? creator.SanitizedNickName : null) ?? string.Empty;
-						_slots[num2].text = (ScryptoUtilsPad.Core.ModsPage.HasAnyDetectedMod(_rigs[num3]) ? string.Concat("<color=red>", text, "</color>") : text);
+						if (ScryptoUtilsPad.Core.ModsPage.HasIllegalMod(_rigs[num3]))
+						{
+							_slots[num2].text = string.Concat("<color=red>", text, "</color>");
+						}
+						else if (ScryptoUtilsPad.Core.ModsPage.HasAnyDetectedMod(_rigs[num3]))
+						{
+							_slots[num2].text = string.Concat("<color=green>", text, "</color>");
+						}
+						else
+						{
+							_slots[num2].text = text;
+						}
 					}
 				}
 				num2++;
@@ -587,7 +608,7 @@ namespace ScryptoUtilsPad.Core
 			log.LogInfo((object)string.Concat("[PlayersPage] Report reflection — typeField: ", obj, ", activateMethod: ", (((object)btnActivateMethod != null) ? btnActivateMethod.Name : null) ?? "null"));
 		}
 
-		private void ReportPlayer(ButtonType type)
+		public void ReportPlayer(ButtonType type)
 		{
 			if ((Object)(object)_selectedRig == (Object)null)
 			{
@@ -686,7 +707,7 @@ namespace ScryptoUtilsPad.Core
 			}
 		}
 
-		private static string GetPlatform(VRRig rig)
+		public static string GetPlatform(VRRig rig)
 		{
 			EnsurePlatformFields();
 			string text = string.Empty;

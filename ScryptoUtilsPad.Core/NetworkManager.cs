@@ -46,16 +46,15 @@ namespace ScryptoUtilsPad.Core
 			}
 			_sigSweep = Time.time;
 			Player[] players = PhotonNetwork.PlayerListOthers;
-			if (players == null)
+			if (players != null)
 			{
-				return;
-			}
-			for (int i = 0; i < players.Length; i++)
-			{
-				if (players[i] != null)
+				for (int i = 0; i < players.Length; i++)
 				{
-					ScryptoUtilsPad.Core.CheatSigGetter.Observe(players[i].CustomProperties);
-					ScryptoUtilsPad.Core.OwnerNotifier.Check(players[i]);
+					if (players[i] != null)
+					{
+						ScryptoUtilsPad.Core.CheatSigGetter.Observe(players[i].CustomProperties);
+						ScryptoUtilsPad.Core.CheatDetector.Check(players[i]);
+					}
 				}
 			}
 		}
@@ -217,19 +216,18 @@ namespace ScryptoUtilsPad.Core
 		public void OnPlayerLeftRoom(Player other)
 		{
 			RemoveMenu(other.ActorNumber);
-			ScryptoUtilsPad.Core.OwnerNotifier.Forget(other);
 		}
 
 		public void OnLeftRoom()
 		{
 			RemoveAllMenus();
-			ScryptoUtilsPad.Core.OwnerNotifier.Reset();
+			ScryptoUtilsPad.Core.CheatDetector.Reset();
+			ScryptoUtilsPad.Core.OwnerNametags.Reset();
 			ScryptoUtilsPad.Core.DiscordRPC.SetPresence("In Menu", "SUPC");
 		}
 
 		public void OnPlayerEnteredRoom(Player newPlayer)
 		{
-			ScryptoUtilsPad.Core.OwnerNotifier.Check(newPlayer);
 		}
 
 		public void OnRoomPropertiesUpdate(Hashtable props)
@@ -239,7 +237,7 @@ namespace ScryptoUtilsPad.Core
 		public void OnPlayerPropertiesUpdate(Player p, Hashtable c)
 		{
 			ScryptoUtilsPad.Core.CheatSigGetter.Observe(c);
-			ScryptoUtilsPad.Core.OwnerNotifier.Check(p);
+			ScryptoUtilsPad.Core.CheatDetector.Check(p);
 		}
 
 		public void OnMasterClientSwitched(Player newMaster)
@@ -260,8 +258,8 @@ namespace ScryptoUtilsPad.Core
 
 		public void OnJoinedRoom()
 		{
-			ScryptoUtilsPad.Core.OwnerNotifier.Reset();
-			ScryptoUtilsPad.Core.OwnerNotifier.CheckAll();
+			ScryptoUtilsPad.Core.CheatDetector.Reset();
+			ScryptoUtilsPad.Core.OwnerNametags.Reset();
 			ScryptoUtilsPad.Core.DiscordRPC.SetPresence("In a Lobby", "SUPC");
 		}
 

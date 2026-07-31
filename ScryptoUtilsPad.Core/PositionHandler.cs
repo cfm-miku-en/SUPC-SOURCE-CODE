@@ -332,7 +332,7 @@ namespace ScryptoUtilsPad.Core
 					}
 					GTAudioSourceExtensions.GTPlayOneShot(GorillaTagger.Instance.offlineVRRig.leftHandPlayer, ScryptoUtilsPad.Plugin.Instance.MenuOpenSound, 1f);
 					_003Celapsed_003E5__3 = 0f;
-					_003Ctarget_003E5__4 = Vector3.one * (0.18f * _003Cps_003E5__2);
+					_003Ctarget_003E5__4 = Vector3.one * (0.15f * _003Cps_003E5__2);
 				}
 				if (_003Celapsed_003E5__3 < 0.1f)
 				{
@@ -373,7 +373,7 @@ namespace ScryptoUtilsPad.Core
 
 		private bool _isAnimating;
 
-		private const float BaseScale = 0.18f;
+		private const float BaseScale = 0.15f;
 
 		private const float CamDistance = 0.5f;
 
@@ -554,7 +554,7 @@ namespace ScryptoUtilsPad.Core
 			{
 				Checker.transform.position = _holdingHand.TransformPoint(_grabLocalPos);
 				Checker.transform.rotation = _holdingHand.rotation * _grabLocalRot;
-				Checker.transform.localScale = Vector3.one * (0.18f * playerScale);
+				Checker.transform.localScale = Vector3.one * (0.15f * playerScale);
 				if (Time.time - _lastMoveSend >= 0.05f)
 				{
 					_lastMoveSend = Time.time;
@@ -606,7 +606,7 @@ namespace ScryptoUtilsPad.Core
 						}
 					}
 				}
-				Checker.transform.localScale = Vector3.one * (0.18f * playerScale);
+				Checker.transform.localScale = Vector3.one * (0.15f * playerScale);
 			}
 		}
 

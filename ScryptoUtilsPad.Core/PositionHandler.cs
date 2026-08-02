@@ -554,7 +554,7 @@ namespace ScryptoUtilsPad.Core
 			{
 				Checker.transform.position = _holdingHand.TransformPoint(_grabLocalPos);
 				Checker.transform.rotation = _holdingHand.rotation * _grabLocalRot;
-				Checker.transform.localScale = Vector3.one * (0.15f * playerScale);
+				Checker.transform.localScale = Vector3.one * (0.15f * playerScale * ScryptoUtilsPad.Core.MenuSizeSettings.CurrentScale);
 				if (Time.time - _lastMoveSend >= 0.05f)
 				{
 					_lastMoveSend = Time.time;
@@ -606,7 +606,7 @@ namespace ScryptoUtilsPad.Core
 						}
 					}
 				}
-				Checker.transform.localScale = Vector3.one * (0.15f * playerScale);
+				Checker.transform.localScale = Vector3.one * (0.15f * playerScale * ScryptoUtilsPad.Core.MenuSizeSettings.CurrentScale);
 			}
 		}
 

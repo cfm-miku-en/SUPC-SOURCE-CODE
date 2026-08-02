@@ -10,6 +10,23 @@ namespace ScryptoUtilsPad.Core
 
 		private static readonly ManualLogSource Log = Logger.CreateLogSource("NametagManager");
 
+		public static void Refresh()
+		{
+			ScryptoUtilsPad.Core.NametagManager inst = Instance;
+			if ((Object)(object)inst == (Object)null)
+			{
+				return;
+			}
+			foreach (TextMeshPro tag in inst._tags.Values)
+			{
+				if ((Object)(object)tag != (Object)null)
+				{
+					Object.Destroy((Object)(object)((Component)tag).gameObject);
+				}
+			}
+			inst._tags.Clear();
+		}
+
 		public static bool Enabled
 		{
 			get
@@ -183,7 +200,7 @@ namespace ScryptoUtilsPad.Core
 							float num = ((val2.scaleFactor > 0f) ? val2.scaleFactor : 1f);
 							val3.transform.position = val4.position + Vector3.up * (0.48f * num);
 							FaceCamera(val3, val);
-							((TMP_Text)val3).text = ((creator != null) ? creator.SanitizedNickName : null) ?? string.Empty;
+							((TMP_Text)val3).text = (((creator != null) ? creator.SanitizedNickName : null) ?? string.Empty) + ScryptoUtilsPad.Core.NametagExtras.BuildSuffix(val2);
 							try
 							{
 								((TMP_Text)val3).color = Color.white;

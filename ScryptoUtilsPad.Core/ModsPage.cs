@@ -233,11 +233,31 @@ namespace ScryptoUtilsPad.Core
 							list.Add(entry2);
 						}
 					}
+					else
+					{
+						string partialLabel;
+						if (ScryptoUtilsPad.Core.SUPCData.TryMatchPartial(key, out partialLabel))
+						{
+							string entry3 = string.Concat("[<color=red>", partialLabel, "</color>]");
+							if (!list.Contains(entry3))
+							{
+								list.Add(entry3);
+							}
+						}
+					}
 				}
 			}
 			finally
 			{
 				((System.IDisposable)enumerator).Dispose();
+			}
+			if (ScryptoUtilsPad.Core.PropertyWipe.IsWiped(rig))
+			{
+				string wipeEntry = "[<color=red>Property Wipe (evading checkers)</color>]";
+				if (!list.Contains(wipeEntry))
+				{
+					list.Add(wipeEntry);
+				}
 			}
 			return list;
 		}
@@ -376,7 +396,9 @@ namespace ScryptoUtilsPad.Core
 				while (enumerator.MoveNext())
 				{
 					object current = enumerator.Current;
-					if (ScryptoUtilsPad.Core.SUPCData.KnownCheats.ContainsKey(current.ToString().ToLower()))
+					string ck = current.ToString().ToLower();
+					string dummyLabel;
+					if (ScryptoUtilsPad.Core.SUPCData.KnownCheats.ContainsKey(ck) || ScryptoUtilsPad.Core.SUPCData.TryMatchPartial(ck, out dummyLabel))
 					{
 						return true;
 					}

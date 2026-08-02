@@ -145,7 +145,7 @@ namespace ScryptoUtilsPad.Core
 					GameObject headMesh = rig.headMesh;
 					Transform head = ((headMesh != null) ? headMesh.transform : null) ?? ((Component)rig).transform;
 					float scale = ((rig.scaleFactor > 0f) ? rig.scaleFactor : 1f);
-					float height = (ScryptoUtilsPad.Core.NametagManager.Enabled ? 0.62f : 0.48f) * scale;
+					float height = (ScryptoUtilsPad.Core.NametagManager.Enabled ? 0.82f : 0.56f) * scale;
 					tag.transform.position = head.position + Vector3.up * height;
 					FaceCamera(tag, camera);
 				}

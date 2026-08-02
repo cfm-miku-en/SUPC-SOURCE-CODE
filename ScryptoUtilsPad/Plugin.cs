@@ -1,6 +1,6 @@
 namespace ScryptoUtilsPad
 {
-	[BepInPlugin("com.lowmiku.utilspad", "SUPC", "1.1.9")]
+	[BepInPlugin("com.lowmiku.utilspad", "SUPC", "2.0.0")]
 	public class Plugin : BaseUnityPlugin
 	{
 		public enum OpenButton
@@ -79,7 +79,7 @@ namespace ScryptoUtilsPad
 		private void Awake()
 		{
 			Instance = this;
-			ScryptoUtilsPad.Core.DeHamburbur.Apply();
+			ScryptoUtilsPad.Core.BadLinkKiller.Apply();
 			Keybind = ((BaseUnityPlugin)this).Config.Bind<ScryptoUtilsPad.Plugin.OpenButton>("Settings", "OpenButton", ScryptoUtilsPad.Plugin.OpenButton.LeftPrimary, "Button used to open/close the menu");
 			ScryptoUtilsPad.Core.CheatSigGetter.Enabled = ((BaseUnityPlugin)this).Config.Bind<bool>("Signatures", "Collect Signatures", true, "Collect unknown mod/cheat signature keys seen in lobbies.").Value;
 			ScryptoUtilsPad.Core.CheatSigGetter.AutoUpload = ((BaseUnityPlugin)this).Config.Bind<bool>("Signatures", "Auto Upload", true, "Upload new signature keys (keys only, no player info) to help keep the lists current.").Value;
@@ -106,7 +106,21 @@ namespace ScryptoUtilsPad
 				return;
 			}
 			GameObject val4 = Object.Instantiate<GameObject>(val3);
-			val4.transform.localScale = Vector3.one * 0.85f;
+			ScryptoUtilsPad.Core.ConfigMigration.RunIfNeeded(((BaseUnityPlugin)this).Config);
+			ScryptoUtilsPad.Core.UserFiles.EnsureFolders();
+			ScryptoUtilsPad.Core.UserFiles.LoadThemes();
+			ScryptoUtilsPad.Core.UserFiles.RefreshConfigList();
+			ScryptoUtilsPad.Core.SharedConfig.Load();
+			ScryptoUtilsPad.Core.UserFiles.LoadActiveProfileAtStartup();
+			ScryptoUtilsPad.Core.SharedConfig.EnableAutoSave();
+			ScryptoUtilsPad.Core.MenuSizeSettings.Load();
+			ScryptoUtilsPad.Core.ColorSettings.Load();
+			ScryptoUtilsPad.Core.RigPreview.LoadPrefs();
+			ScryptoUtilsPad.Core.DesktopCamera.LoadPrefs();
+			((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.DesktopCamera>();
+			ScryptoUtilsPad.Core.NametagExtras.Load();
+			ScryptoUtilsPad.Core.MenuSizeSettings.MenuRoot = val4.transform;
+			val4.transform.localScale = Vector3.one * (0.85f * ScryptoUtilsPad.Core.MenuSizeSettings.CurrentScale);
 			Object.DontDestroyOnLoad((Object)(object)val4);
 			val4.SetActive(false);
 			NeutralizeColliders(val4);
@@ -174,6 +188,8 @@ namespace ScryptoUtilsPad
 			ScryptoUtilsPad.Tools.CameraPage cameraPage = ((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Tools.CameraPage>();
 			cameraPage.Init(val4, cameraPrefab);
 			((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.GunSelector>();
+			ScryptoUtilsPad.Core.RigPreview rigPreview = ((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.RigPreview>();
+			rigPreview.Init(val4.transform);
 			ScryptoUtilsPad.Core.PlayersPage playersPage = ((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.PlayersPage>();
 			playersPage.Init(val4.transform);
 			ScryptoUtilsPad.Core.RoomPage roomPage = ((Component)this).gameObject.AddComponent<ScryptoUtilsPad.Core.RoomPage>();

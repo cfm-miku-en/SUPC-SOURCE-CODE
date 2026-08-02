@@ -30,7 +30,7 @@ namespace ScryptoUtilsPad.Core
 
 		private static readonly Color DefaultMat2 = new Color(0.169f, 0.169f, 0.169f);
 
-		private static readonly System.ValueTuple<string, Color, Color>[] Themes;
+		internal static System.ValueTuple<string, Color, Color>[] Themes;
 
 		private static readonly string[] ModeNames;
 
@@ -206,6 +206,27 @@ namespace ScryptoUtilsPad.Core
 			PadToNewPage();
 			AddEntry(() => string.Concat("Nametag Font: ", ScryptoUtilsPad.Core.NametagFontSettings.CurrentName), new System.Action(NextNametagFont), new System.Action(PrevNametagFont));
 			AddEntry(() => string.Concat("Startup Sound: ", ScryptoUtilsPad.Core.MenuSoundSettings.CurrentName), new System.Action(NextMenuSound), new System.Action(PrevMenuSound));
+			AddEntry(() => string.Concat("Menu Size: ", ScryptoUtilsPad.Core.MenuSizeSettings.CurrentName), new System.Action(NextMenuSize), new System.Action(PrevMenuSize));
+			AddToggle(() => string.Concat("Tag FPS: ", ScryptoUtilsPad.Core.NametagExtras.ShowFps ? "On" : "Off"), new System.Action(ToggleTagFps));
+			AddToggle(() => string.Concat("Tag Platform: ", ScryptoUtilsPad.Core.NametagExtras.ShowPlatform ? "On" : "Off"), new System.Action(ToggleTagPlatform));
+			AddToggle(() => "Join Discord", new System.Action(OpenDiscord));
+			AddToggle(() => "Export Config", new System.Action(ExportConfig));
+			AddToggle(() => "Reload Config", new System.Action(ReloadConfig));
+			AddEntry(() => string.Concat("Profile: ", ScryptoUtilsPad.Core.UserFiles.CurrentConfigName), new System.Action(NextProfile), new System.Action(PrevProfile));
+			AddToggle(() => "Load Profile", new System.Action(LoadProfile));
+			AddToggle(() => "Save As Profile", new System.Action(SaveProfile));
+			AddToggle(() => "Use Default Config", new System.Action(ClearProfile));
+			AddToggle(() => string.Concat("Auto Save: ", ScryptoUtilsPad.Core.SharedConfig.AutoSave ? "On" : "Off"), new System.Action(ToggleAutoSave));
+			AddToggle(() => string.Concat("Rig Preview: ", ScryptoUtilsPad.Core.RigPreview.Enabled ? "On" : "Off"), new System.Action(ToggleRigPreview));
+			AddToggle(() => "Reset Rig Preview", new System.Action(ResetRigPreview));
+			AddToggle(() => string.Concat("Desktop 1stP (BROKEN): ", ScryptoUtilsPad.Core.DesktopCamera.FirstPerson ? "On" : "Off"), new System.Action(ToggleDesktopFirstPerson));
+			AddEntry(() => string.Concat("Desktop FOV: ", ScryptoUtilsPad.Core.DesktopCamera.Fov), new System.Action(DesktopFovUp), new System.Action(DesktopFovDown));
+			AddEntry(() => string.Concat("Desktop Smooth: ", (ScryptoUtilsPad.Core.DesktopCamera.Smooth <= 0) ? "Off" : ScryptoUtilsPad.Core.DesktopCamera.Smooth.ToString()), new System.Action(DesktopSmoothUp), new System.Action(DesktopSmoothDown));
+			PadToNewPage();
+			AddEntry(() => string.Concat("Color: ", ScryptoUtilsPad.Core.ColorSettings.CurrentName), new System.Action(NextColor), new System.Action(PrevColor));
+			AddEntry(() => string.Concat("Red: ", ScryptoUtilsPad.Core.ColorSettings.Red), new System.Action(RedUp), new System.Action(RedDown));
+			AddEntry(() => string.Concat("Green: ", ScryptoUtilsPad.Core.ColorSettings.Green), new System.Action(GreenUp), new System.Action(GreenDown));
+			AddEntry(() => string.Concat("Blue: ", ScryptoUtilsPad.Core.ColorSettings.Blue), new System.Action(BlueUp), new System.Action(BlueDown));
 		}
 
 		private void PadToNewPage()
@@ -577,6 +598,33 @@ namespace ScryptoUtilsPad.Core
 			ApplyMode();
 		}
 
+		public void HotApplyAll()
+		{
+			_themeIndex = Mathf.Clamp(PlayerPrefs.GetInt("ScryptoUtilsPad.ThemeIndex", 0), 0, Themes.Length - 1);
+			_modeIndex = PlayerPrefs.GetInt("ScryptoUtilsPad.ModeIndex", 0);
+			if (_modeIndex < 0 || _modeIndex >= ModeNames.Length)
+			{
+				_modeIndex = 0;
+			}
+			ScryptoUtilsPad.Core.SelectionSettings.Load();
+			ScryptoUtilsPad.Core.NametagFontSettings.Load();
+			ScryptoUtilsPad.Core.ClickSoundSettings.Load();
+			ScryptoUtilsPad.Core.MenuSoundSettings.Load();
+			ScryptoUtilsPad.Core.NametagExtras.Load();
+			ScryptoUtilsPad.Core.MenuSizeSettings.Load();
+			ScryptoUtilsPad.Core.ColorSettings.Load();
+			ScryptoUtilsPad.Core.RigPreview.LoadPrefs();
+			ScryptoUtilsPad.Core.DesktopCamera.LoadPrefs();
+			LoadAlertPrefs();
+
+			ApplyTheme();
+			ApplyMode();
+			ScryptoUtilsPad.Core.MenuSizeSettings.Apply();
+			ScryptoUtilsPad.Core.ColorSettings.Apply();
+			ScryptoUtilsPad.Core.NametagManager.Refresh();
+			UpdateTexts();
+		}
+
 		private void ApplyMode()
 		{
 			PlayerPrefs.SetInt("ScryptoUtilsPad.ModeIndex", _modeIndex);
@@ -624,6 +672,178 @@ namespace ScryptoUtilsPad.Core
 			UpdateTexts();
 		}
 
+		public void NextMenuSize()
+		{
+			ScryptoUtilsPad.Core.MenuSizeSettings.Index = ScryptoUtilsPad.Core.MenuSizeSettings.Index + 1;
+			ScryptoUtilsPad.Core.MenuSizeSettings.Apply();
+			UpdateTexts();
+		}
+
+		public void PrevMenuSize()
+		{
+			ScryptoUtilsPad.Core.MenuSizeSettings.Index = ScryptoUtilsPad.Core.MenuSizeSettings.Index - 1;
+			ScryptoUtilsPad.Core.MenuSizeSettings.Apply();
+			UpdateTexts();
+		}
+
+		public void ToggleTagFps()
+		{
+			ScryptoUtilsPad.Core.NametagExtras.ShowFps = !ScryptoUtilsPad.Core.NametagExtras.ShowFps;
+			ScryptoUtilsPad.Core.NametagExtras.Save();
+			UpdateTexts();
+		}
+
+		public void ToggleTagPlatform()
+		{
+			ScryptoUtilsPad.Core.NametagExtras.ShowPlatform = !ScryptoUtilsPad.Core.NametagExtras.ShowPlatform;
+			ScryptoUtilsPad.Core.NametagExtras.Save();
+			UpdateTexts();
+		}
+
+		private void ColorStep(int channel, int delta)
+		{
+			ScryptoUtilsPad.Core.ColorSettings.StepChannel(channel, delta);
+			ScryptoUtilsPad.Core.ColorSettings.Apply();
+			UpdateTexts();
+		}
+
+		public void NextColor()
+		{
+			ScryptoUtilsPad.Core.ColorSettings.Index = ScryptoUtilsPad.Core.ColorSettings.Index + 1;
+			ScryptoUtilsPad.Core.ColorSettings.Apply();
+			UpdateTexts();
+		}
+
+		public void PrevColor()
+		{
+			ScryptoUtilsPad.Core.ColorSettings.Index = ScryptoUtilsPad.Core.ColorSettings.Index - 1;
+			ScryptoUtilsPad.Core.ColorSettings.Apply();
+			UpdateTexts();
+		}
+
+		public void RedUp() { ColorStep(0, 1); }
+
+		public void RedDown() { ColorStep(0, -1); }
+
+		public void GreenUp() { ColorStep(1, 1); }
+
+		public void GreenDown() { ColorStep(1, -1); }
+
+		public void BlueUp() { ColorStep(2, 1); }
+
+		public void BlueDown() { ColorStep(2, -1); }
+
+		public void ToggleDesktopFirstPerson()
+		{
+			ScryptoUtilsPad.Core.DesktopCamera.FirstPerson = !ScryptoUtilsPad.Core.DesktopCamera.FirstPerson;
+			ScryptoUtilsPad.Core.DesktopCamera.Save();
+			ScryptoUtilsPad.Core.DesktopCamera.LogState("Toggled ->");
+			UpdateTexts();
+		}
+
+		private static int WrapRange(int v, int min, int max)
+		{
+			int span = max - min + 1;
+			return ((v - min) % span + span) % span + min;
+		}
+
+		public void DesktopFovUp()
+		{
+			ScryptoUtilsPad.Core.DesktopCamera.Fov = WrapRange(ScryptoUtilsPad.Core.DesktopCamera.Fov + 5, 30, 140);
+			ScryptoUtilsPad.Core.DesktopCamera.Save();
+			UpdateTexts();
+		}
+
+		public void DesktopFovDown()
+		{
+			ScryptoUtilsPad.Core.DesktopCamera.Fov = WrapRange(ScryptoUtilsPad.Core.DesktopCamera.Fov - 5, 30, 140);
+			ScryptoUtilsPad.Core.DesktopCamera.Save();
+			UpdateTexts();
+		}
+
+		public void DesktopSmoothUp()
+		{
+			ScryptoUtilsPad.Core.DesktopCamera.Smooth = WrapRange(ScryptoUtilsPad.Core.DesktopCamera.Smooth + 1, 0, 10);
+			ScryptoUtilsPad.Core.DesktopCamera.Save();
+			UpdateTexts();
+		}
+
+		public void DesktopSmoothDown()
+		{
+			ScryptoUtilsPad.Core.DesktopCamera.Smooth = WrapRange(ScryptoUtilsPad.Core.DesktopCamera.Smooth - 1, 0, 10);
+			ScryptoUtilsPad.Core.DesktopCamera.Save();
+			UpdateTexts();
+		}
+
+		public void NextProfile()
+		{
+			ScryptoUtilsPad.Core.UserFiles.RefreshConfigList();
+			ScryptoUtilsPad.Core.UserFiles.ConfigIndex = ScryptoUtilsPad.Core.UserFiles.ConfigIndex + 1;
+			UpdateTexts();
+		}
+
+		public void PrevProfile()
+		{
+			ScryptoUtilsPad.Core.UserFiles.RefreshConfigList();
+			ScryptoUtilsPad.Core.UserFiles.ConfigIndex = ScryptoUtilsPad.Core.UserFiles.ConfigIndex - 1;
+			UpdateTexts();
+		}
+
+		public void LoadProfile()
+		{
+			ScryptoUtilsPad.Core.UserFiles.LoadCurrentConfig();
+			HotApplyAll();
+		}
+
+		public void SaveProfile()
+		{
+			ScryptoUtilsPad.Core.UserFiles.SaveCurrentAsProfile();
+			UpdateTexts();
+		}
+
+		public void ToggleRigPreview()
+		{
+			ScryptoUtilsPad.Core.RigPreview.SetEnabled(!ScryptoUtilsPad.Core.RigPreview.Enabled);
+			UpdateTexts();
+		}
+
+		public void ResetRigPreview()
+		{
+			ScryptoUtilsPad.Core.RigPreview.ResetPlacement();
+			UpdateTexts();
+		}
+
+		public void ToggleAutoSave()
+		{
+			ScryptoUtilsPad.Core.SharedConfig.SetAutoSave(!ScryptoUtilsPad.Core.SharedConfig.AutoSave);
+			UpdateTexts();
+		}
+
+		public void ClearProfile()
+		{
+			ScryptoUtilsPad.Core.UserFiles.ClearActiveProfile();
+			ScryptoUtilsPad.Core.SharedConfig.Load();
+			HotApplyAll();
+		}
+
+		public void ExportConfig()
+		{
+			ScryptoUtilsPad.Core.SharedConfig.Save();
+			UpdateTexts();
+		}
+
+		public void ReloadConfig()
+		{
+			ScryptoUtilsPad.Core.SharedConfig.Load();
+			HotApplyAll();
+		}
+
+		public void OpenDiscord()
+		{
+			Application.OpenURL("https://discord.gg/bPjmq3qw6Q");
+			UpdateTexts();
+		}
+
 		public void NextTheme()
 		{
 			_themeIndex = (_themeIndex + 1) % Themes.Length;
@@ -634,6 +854,24 @@ namespace ScryptoUtilsPad.Core
 		{
 			_themeIndex = (_themeIndex - 1 + Themes.Length) % Themes.Length;
 			ApplyTheme();
+		}
+
+		public static Color CurrentThemeSecondary
+		{
+			get
+			{
+				int idx = Mathf.Clamp(PlayerPrefs.GetInt("ScryptoUtilsPad.ThemeIndex", 0), 0, Themes.Length - 1);
+				return Themes[idx].Item3;
+			}
+		}
+
+		public static Color CurrentThemePrimary
+		{
+			get
+			{
+				int idx = Mathf.Clamp(PlayerPrefs.GetInt("ScryptoUtilsPad.ThemeIndex", 0), 0, Themes.Length - 1);
+				return Themes[idx].Item2;
+			}
 		}
 
 		private void ApplyTheme()
@@ -722,6 +960,7 @@ namespace ScryptoUtilsPad.Core
 
 		private void UpdateTexts()
 		{
+			ScryptoUtilsPad.Core.SharedConfig.MarkDirty();
 			Render();
 		}
 
@@ -850,7 +1089,7 @@ namespace ScryptoUtilsPad.Core
 
 		static SettingsPage()
 		{
-			System.ValueTuple<string, Color, Color>[] array = new System.ValueTuple<string, Color, Color>[10];
+			System.ValueTuple<string, Color, Color>[] array = new System.ValueTuple<string, Color, Color>[18];
 			array[0] = new System.ValueTuple<string, Color, Color>("Default Theme", new Color(0f, 1f, 0.667f), new Color(0.169f, 0.169f, 0.169f));
 			array[1] = new System.ValueTuple<string, Color, Color>("Neon Theme", new Color(1f, 0f, 1f), new Color(0.102f, 0.102f, 0.188f));
 			array[2] = new System.ValueTuple<string, Color, Color>("Ice And Fire Theme", new Color(0.435f, 0.024f, 0.043f), new Color(0.024f, 0.043f, 0.267f));
@@ -861,6 +1100,14 @@ namespace ScryptoUtilsPad.Core
 			array[7] = new System.ValueTuple<string, Color, Color>("Red Theme", new Color(0.647f, 0.165f, 0.165f), new Color(0.102f, 0.039f, 0.02f));
 			array[8] = new System.ValueTuple<string, Color, Color>("Miku Theme", new Color(0.078f, 0.212f, 0.549f), new Color(0.008f, 0.02f, 0.055f));
 			array[9] = new System.ValueTuple<string, Color, Color>("Vistro Theme", new Color(1f, 0.843f, 0.098f), new Color(0.043f, 0.129f, 0.478f));
+			array[10] = new System.ValueTuple<string, Color, Color>("Teto Theme", new Color(0.855f, 0.184f, 0.286f), new Color(0.118f, 0.02f, 0.031f));
+			array[11] = new System.ValueTuple<string, Color, Color>("Neru Theme", new Color(0.98f, 0.82f, 0.25f), new Color(0.098f, 0.078f, 0.016f));
+			array[12] = new System.ValueTuple<string, Color, Color>("Sapphire Theme", new Color(0.06f, 0.42f, 0.85f), new Color(0.004f, 0.031f, 0.098f));
+			array[13] = new System.ValueTuple<string, Color, Color>("Luka Theme", new Color(0.96f, 0.45f, 0.66f), new Color(0.114f, 0.031f, 0.063f));
+			array[14] = new System.ValueTuple<string, Color, Color>("Rin/Len Theme", new Color(1f, 0.8f, 0.07f), new Color(0.122f, 0.094f, 0.008f));
+			array[15] = new System.ValueTuple<string, Color, Color>("MEIKO Theme", new Color(0.85f, 0.05f, 0.11f), new Color(0.106f, 0.008f, 0.016f));
+			array[16] = new System.ValueTuple<string, Color, Color>("KAITO Theme", new Color(0.13f, 0.35f, 0.86f), new Color(0.016f, 0.043f, 0.106f));
+			array[17] = new System.ValueTuple<string, Color, Color>("GUMI Theme", new Color(0.4f, 0.8f, 0.16f), new Color(0.047f, 0.098f, 0.02f));
             Themes = array;
 			string[] array2 = new string[2];
 			array2[0] = "Float";

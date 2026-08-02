@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>ScryptoUtilsPad</RootNamespace>
     <AssemblyName>ScryptoUtilsPad</AssemblyName>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -25,6 +25,7 @@
     <EmbeddedResource Include="Resources\Clicky.wav"><LogicalName>ScryptoUtilsPad.Resources.Clicky.wav</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\Woody Click.wav"><LogicalName>ScryptoUtilsPad.Resources.Woody Click.wav</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\Border.wav"><LogicalName>ScryptoUtilsPad.Resources.Border.wav</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="Resources\Slider.wav"><LogicalName>ScryptoUtilsPad.Resources.Slider.wav</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\Creamy.wav"><LogicalName>ScryptoUtilsPad.Resources.Creamy.wav</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\Splash.wav"><LogicalName>ScryptoUtilsPad.Resources.Splash.wav</LogicalName></EmbeddedResource>
     <EmbeddedResource Include="Resources\Half-Life.wav"><LogicalName>ScryptoUtilsPad.Resources.Half-Life.wav</LogicalName></EmbeddedResource>

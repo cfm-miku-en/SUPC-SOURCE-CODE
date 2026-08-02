@@ -199,10 +199,20 @@ namespace ScryptoUtilsPad.Core
 				modsPage.ShowRig(rig);
 			}
 			PlaceSelectionDot(rig);
+			ScryptoUtilsPad.Core.RigPreview preview = ScryptoUtilsPad.Core.RigPreview.Instance;
+			if ((Object)(object)preview != (Object)null)
+			{
+				preview.Show(rig);
+			}
 		}
 
 		private void ShowPlayerInfo(VRRig rig)
 		{
+			ScryptoUtilsPad.Core.RigPreview rigPreview = ScryptoUtilsPad.Core.RigPreview.Instance;
+			if ((Object)(object)rigPreview != (Object)null)
+			{
+				rigPreview.Show(rig);
+			}
 			_selectedRig = rig;
 			if ((Object)(object)_secondaryMenu != (Object)null)
 			{
@@ -612,75 +622,53 @@ namespace ScryptoUtilsPad.Core
 		{
 			if ((Object)(object)_selectedRig == (Object)null)
 			{
+				Log.LogWarning("[PlayersPage] Report: no player selected.");
 				return;
 			}
-			EnsureButtonReflection();
-			NetPlayer creator = _selectedRig.Creator;
-			System.Type type2 = ((creator != null) ? ((object)creator).GetType() : null);
-			GorillaPlayerLineButton[] array = Object.FindObjectsByType<GorillaPlayerLineButton>((FindObjectsInactive)1, (FindObjectsSortMode)0);
-			int num = 0;
-			while (num < array.Length)
+			NetPlayer target = _selectedRig.creator;
+			if (target == null)
 			{
-				GorillaPlayerLineButton val = array[num];
-				if (_btnTypeField != null)
-				{
-					object value = _btnTypeField.GetValue(val);
-					if (value == null || (ButtonType)value != type)
-					{
-						goto IL_01cc;
-					}
-				}
-				bool flag = false;
-				Transform parent = ((Component)val).transform.parent;
-				while ((Object)(object)parent != (Object)null && !flag)
-				{
-					Component[] components = ((Component)parent).GetComponents<Component>();
-					int num2 = 0;
-					while (num2 < components.Length)
-					{
-						Component val2 = components[num2];
-						if (!((Object)(object)val2 == (Object)null))
-						{
-							System.Reflection.FieldInfo[] fields = ((object)val2).GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic);
-							int num3 = 0;
-							while (num3 < fields.Length)
-							{
-								System.Reflection.FieldInfo fieldInfo = fields[num3];
-								if ((!(type2 != null) || !(fieldInfo.FieldType != type2)) && object.Equals(fieldInfo.GetValue(val2), creator))
-								{
-									flag = true;
-									break;
-								}
-								num3++;
-							}
-							if (flag)
-							{
-								break;
-							}
-						}
-						num2++;
-					}
-					parent = parent.parent;
-				}
-				if (!flag)
-				{
-					goto IL_01cc;
-				}
-				System.Reflection.MethodInfo btnActivateMethod = _btnActivateMethod;
-				if ((object)btnActivateMethod != null)
-				{
-					btnActivateMethod.Invoke(val, null);
-				}
-				ManualLogSource log = Log;
-				NetPlayer creator2 = _selectedRig.creator;
-				log.LogInfo((object)string.Format("[PlayersPage] Reported {0} for {1}", (creator2 != null) ? creator2.SanitizedNickName : null, type));
+				Log.LogWarning("[PlayersPage] Report: selected rig has no creator.");
 				return;
-				IL_01cc:
-				num++;
 			}
-			ManualLogSource log2 = Log;
-			NetPlayer creator3 = _selectedRig.creator;
-			log2.LogWarning((object)string.Concat("[PlayersPage] No report button found for ", (creator3 != null) ? creator3.SanitizedNickName : null));
+			string targetId = target.UserId;
+			GorillaPlayerLineButton[] array = Object.FindObjectsByType<GorillaPlayerLineButton>((FindObjectsInactive)1, (FindObjectsSortMode)0);
+			int i = 0;
+			while (i < array.Length)
+			{
+				GorillaPlayerLineButton btn = array[i];
+				i++;
+				if ((Object)(object)btn == (Object)null || btn.buttonType != type)
+				{
+					continue;
+				}
+				GorillaPlayerScoreboardLine line = btn.parentLine;
+				NetPlayer linePlayer = (((Object)(object)line != (Object)null) ? line.linePlayer : null);
+				if (linePlayer == null)
+				{
+					continue;
+				}
+				if (!string.IsNullOrEmpty(targetId) && linePlayer.UserId != targetId)
+				{
+					continue;
+				}
+				if (string.IsNullOrEmpty(targetId) && linePlayer != target)
+				{
+					continue;
+				}
+				try
+				{
+					btn.Click(true);
+					Log.LogInfo("[PlayersPage] Reported " + target.SanitizedNickName + " (" + type.ToString() + ").");
+				}
+				catch (System.Exception e)
+				{
+					Log.LogWarning("[PlayersPage] Report click failed: " + e.Message);
+				}
+				return;
+			}
+			Log.LogWarning("[PlayersPage] No report button found for " + target.SanitizedNickName
+				+ " (scanned " + array.Length + " buttons; open the in-game scoreboard at least once so the lines exist).");
 		}
 
 		private static void EnsurePlatformFields()
@@ -707,52 +695,103 @@ namespace ScryptoUtilsPad.Core
 			}
 		}
 
+		/*
+		 * Platform detection adapted from BingusNametags++ (MIT License),
+		 * Copyright (c) SirKingBinx. Used and modified under the MIT License.
+		 * https://github.com/SirKingBinx/BingusNametagsPlusPlus
+		 */
+		private static readonly System.Collections.Generic.Dictionary<string, string> _platformCache = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.Ordinal);
+
+		public static void ClearPlatformCache()
+		{
+			_platformCache.Clear();
+		}
+
+
 		public static string GetPlatform(VRRig rig)
 		{
-			EnsurePlatformFields();
-			string text = string.Empty;
-			if (_cosmeticsField != null)
+			if ((Object)(object)rig == (Object)null)
 			{
-				try
-				{
-					text = string.Concat((System.Collections.IEnumerable)_cosmeticsField.GetValue(rig));
-				}
-				catch
-				{
-				}
-			}
-			if (text.Contains("S. FIRST LOGIN"))
-			{
-				return "STEAM";
-			}
-			int num = 0;
-			if (_rankedTierField != null)
-			{
-				try
-				{
-					num = System.Convert.ToInt32(_rankedTierField.GetValue(rig));
-				}
-				catch
-				{
-				}
+				return "Unknown";
 			}
 			NetPlayer creator = rig.creator;
-			object obj3;
-			if (creator == null)
+			string userId = ((creator != null) ? creator.UserId : null);
+			if (!string.IsNullOrEmpty(userId))
 			{
-				obj3 = null;
+				string cached;
+				if (_platformCache.TryGetValue(userId, out cached))
+				{
+					return cached;
+				}
 			}
-			else
+			if (!rig.InitializedCosmetics)
 			{
-				Player playerRef = creator.GetPlayerRef();
-				obj3 = ((playerRef != null) ? playerRef.CustomProperties : null);
+				return "Unknown";
 			}
-			Hashtable val = (Hashtable)obj3;
-			if (text.Contains("FIRST LOGIN") || (val != null && ((System.Collections.Generic.Dictionary<object, object>)(object)val).Count >= 2) || num > 0)
+			string platform = "Unknown";
+			try
 			{
-				return "PC";
+				int props = 0;
+				if (creator != null)
+				{
+					Player pr = creator.GetPlayerRef();
+					Hashtable cp = ((pr != null) ? pr.CustomProperties : null);
+					if (cp != null)
+					{
+						props = ((System.Collections.Generic.Dictionary<object, object>)(object)cp).Count;
+					}
+				}
+				if (rig.currentRankedSubTierPC > 0 || props > 1)
+				{
+					platform = "PC";
+				}
+				if (rig.currentRankedSubTierQuest > 0)
+				{
+					platform = "Quest";
+				}
+				else
+				{
+					System.Collections.Generic.HashSet<string> owned = rig._playerOwnedCosmetics;
+					if (owned != null)
+					{
+						bool steam = false;
+						bool first = false;
+						foreach (string c in owned)
+						{
+							if (c == null)
+							{
+								continue;
+							}
+							string lc = c.ToLower();
+							if (lc == "s. first login")
+							{
+								steam = true;
+							}
+							else if (lc == "first login")
+							{
+								first = true;
+							}
+						}
+						if (steam)
+						{
+							platform = "Steam";
+						}
+						else if (first)
+						{
+							platform = "Oculus";
+						}
+					}
+				}
 			}
-			return "Standalone";
+			catch
+			{
+				return "Unknown";
+			}
+			if (platform != "Unknown" && !string.IsNullOrEmpty(userId))
+			{
+				_platformCache[userId] = platform;
+			}
+			return platform;
 		}
 
 		[System.Runtime.CompilerServices.CompilerGenerated]

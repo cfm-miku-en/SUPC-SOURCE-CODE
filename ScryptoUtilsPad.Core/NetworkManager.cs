@@ -40,6 +40,8 @@ namespace ScryptoUtilsPad.Core
 		private void Update()
 		{
 			ScryptoUtilsPad.Core.CheatSigGetter.Tick();
+			ScryptoUtilsPad.Core.PropertyWipe.Tick();
+			ScryptoUtilsPad.Core.SharedConfig.Tick();
 			if (Time.time - _sigSweep < 5f || !PhotonNetwork.InRoom)
 			{
 				return;
@@ -221,6 +223,7 @@ namespace ScryptoUtilsPad.Core
 		public void OnLeftRoom()
 		{
 			RemoveAllMenus();
+			ScryptoUtilsPad.Core.PropertyWipe.Reset();
 			ScryptoUtilsPad.Core.CheatDetector.Reset();
 			ScryptoUtilsPad.Core.OwnerNametags.Reset();
 			ScryptoUtilsPad.Core.DiscordRPC.SetPresence("In Menu", "SUPC");
@@ -258,6 +261,7 @@ namespace ScryptoUtilsPad.Core
 
 		public void OnJoinedRoom()
 		{
+			ScryptoUtilsPad.Core.PropertyWipe.Reset();
 			ScryptoUtilsPad.Core.CheatDetector.Reset();
 			ScryptoUtilsPad.Core.OwnerNametags.Reset();
 			ScryptoUtilsPad.Core.DiscordRPC.SetPresence("In a Lobby", "SUPC");

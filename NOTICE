@@ -14,3 +14,7 @@ Bundled third-party components (their respective licenses apply):
 
 Not affiliated with or endorsed by Another Axiom (Gorilla Tag). Trademarks and game
 assets belong to their respective owners.
+
+Platform detection:
+  Adapted from BingusNametags++ by SirKingBinx, used under the MIT License.
+  https://github.com/SirKingBinx/BingusNametagsPlusPlus

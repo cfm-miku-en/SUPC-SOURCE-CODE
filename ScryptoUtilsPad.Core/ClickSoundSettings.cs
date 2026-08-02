@@ -2,9 +2,9 @@ namespace ScryptoUtilsPad.Core
 {
 	public static class ClickSoundSettings
 	{
-		public static readonly string[] Names = new string[5] { "Default", "Clicky", "Woody", "Border", "Creamy" };
+		public static readonly string[] Names = new string[6] { "Default", "Clicky", "Woody", "Border", "Creamy", "Slider" };
 
-		private static readonly AudioClip[] _clips = new AudioClip[5];
+		private static readonly AudioClip[] _clips = new AudioClip[6];
 
 		private static int _index;
 
@@ -37,6 +37,7 @@ namespace ScryptoUtilsPad.Core
 			_clips[2] = ScryptoUtilsPad.Core.AssetManagement.LoadEmbeddedWav("Woody Click");
 			_clips[3] = ScryptoUtilsPad.Core.AssetManagement.LoadEmbeddedWav("Border");
             _clips[4] = ScryptoUtilsPad.Core.AssetManagement.LoadEmbeddedWav("Creamy");
+			_clips[5] = ScryptoUtilsPad.Core.AssetManagement.LoadEmbeddedWav("Slider");
             Load();
 		}
 

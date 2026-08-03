@@ -1,6 +1,6 @@
 namespace ScryptoUtilsPad
 {
-	[BepInPlugin("com.lowmiku.utilspad", "SUPC", "2.0.0")]
+	[BepInPlugin("com.lowmiku.utilspad", "SUPC", "2.0.3")]
 	public class Plugin : BaseUnityPlugin
 	{
 		public enum OpenButton

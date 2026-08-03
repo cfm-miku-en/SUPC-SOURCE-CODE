@@ -13,6 +13,21 @@ namespace ScryptoUtilsPad.Core
 		private static readonly ManualLogSource Log = Logger.CreateLogSource("DiscordRPC");
 		public static DiscordRPC Instance;
 
+		private static volatile bool _enabled = true;
+
+		public static bool Enabled
+		{
+			get
+			{
+				return _enabled;
+			}
+			set
+			{
+				_enabled = value;
+				PlayerPrefs.SetInt("ScryptoUtilsPad.DiscordRPC", value ? 1 : 0);
+			}
+		}
+
 		private NamedPipeClientStream _pipe;
 		private Thread _thread;
 		private volatile bool _running;
@@ -25,6 +40,7 @@ namespace ScryptoUtilsPad.Core
 		private void Awake()
 		{
 			Instance = this;
+			_enabled = PlayerPrefs.GetInt("ScryptoUtilsPad.DiscordRPC", 1) == 1;
 			UnityEngine.Object.DontDestroyOnLoad(gameObject);
 			_running = true;
 			_thread = new Thread(RunLoop);
@@ -65,6 +81,15 @@ namespace ScryptoUtilsPad.Core
 			{
 				try
 				{
+					if (!_enabled)
+					{
+						if (_connected)
+						{
+							Disconnect();
+						}
+						Thread.Sleep(1000);
+						continue;
+					}
 					if (!_connected)
 					{
 						Connect();

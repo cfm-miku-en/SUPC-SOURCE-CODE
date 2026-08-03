@@ -227,6 +227,8 @@ namespace ScryptoUtilsPad.Core
 			AddEntry(() => string.Concat("Red: ", ScryptoUtilsPad.Core.ColorSettings.Red), new System.Action(RedUp), new System.Action(RedDown));
 			AddEntry(() => string.Concat("Green: ", ScryptoUtilsPad.Core.ColorSettings.Green), new System.Action(GreenUp), new System.Action(GreenDown));
 			AddEntry(() => string.Concat("Blue: ", ScryptoUtilsPad.Core.ColorSettings.Blue), new System.Action(BlueUp), new System.Action(BlueDown));
+			PadToNewPage();
+			AddToggle(() => string.Concat("Discord RPC: ", ScryptoUtilsPad.Core.DiscordRPC.Enabled ? "On" : "Off"), new System.Action(ToggleDiscordRPC));
 		}
 
 		private void PadToNewPage()
@@ -565,6 +567,12 @@ namespace ScryptoUtilsPad.Core
 		{
 			ScryptoUtilsPad.Core.CheatDetector.NotifyModders = !ScryptoUtilsPad.Core.CheatDetector.NotifyModders;
 			PlayerPrefs.SetInt("ScryptoUtilsPad.NotifyModders", ScryptoUtilsPad.Core.CheatDetector.NotifyModders ? 1 : 0);
+			UpdateTexts();
+		}
+
+		public void ToggleDiscordRPC()
+		{
+			ScryptoUtilsPad.Core.DiscordRPC.Enabled = !ScryptoUtilsPad.Core.DiscordRPC.Enabled;
 			UpdateTexts();
 		}
 
@@ -1103,7 +1111,7 @@ namespace ScryptoUtilsPad.Core
 			array[10] = new System.ValueTuple<string, Color, Color>("Teto Theme", new Color(0.855f, 0.184f, 0.286f), new Color(0.118f, 0.02f, 0.031f));
 			array[11] = new System.ValueTuple<string, Color, Color>("Neru Theme", new Color(0.98f, 0.82f, 0.25f), new Color(0.098f, 0.078f, 0.016f));
 			array[12] = new System.ValueTuple<string, Color, Color>("Sapphire Theme", new Color(0.06f, 0.42f, 0.85f), new Color(0.004f, 0.031f, 0.098f));
-			array[13] = new System.ValueTuple<string, Color, Color>("Luka Theme", new Color(0.96f, 0.45f, 0.66f), new Color(0.114f, 0.031f, 0.063f));
+			array[13] = new System.ValueTuple<string, Color, Color>("Sakura Theme", new Color(0.96f, 0.45f, 0.66f), new Color(0.114f, 0.031f, 0.063f));
 			array[14] = new System.ValueTuple<string, Color, Color>("Rin/Len Theme", new Color(1f, 0.8f, 0.07f), new Color(0.122f, 0.094f, 0.008f));
 			array[15] = new System.ValueTuple<string, Color, Color>("MEIKO Theme", new Color(0.85f, 0.05f, 0.11f), new Color(0.106f, 0.008f, 0.016f));
 			array[16] = new System.ValueTuple<string, Color, Color>("KAITO Theme", new Color(0.13f, 0.35f, 0.86f), new Color(0.016f, 0.043f, 0.106f));

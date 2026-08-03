@@ -498,6 +498,11 @@ namespace ScryptoUtilsPad.Core
 			}
 		}
 
+		public void PcToggle()
+		{
+			ToggleMenu();
+		}
+
 		private void ToggleMenu()
 		{
 			if (!_isAnimating)
